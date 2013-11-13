@@ -374,8 +374,7 @@ public class Address  implements java.io.Serializable {
                                 this.postalCode.equals(other.getPostalCode()))) &&
                 ((this.country==null && other.getCountry()==null) ||
                         (this.country!=null &&
-                                this.country.equals(other.getCountry())))&&
-                this.taxRegionId == other.getTaxRegionId();
+                                this.country.equals(other.getCountry())));
         __equalsCalc = null;
         return _equals;
     }
@@ -481,12 +480,6 @@ public class Address  implements java.io.Serializable {
         elemField.setXmlName(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "Country"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
         elemField.setMinOccurs(0);
-        elemField.setNillable(false);
-        typeDesc.addFieldDesc(elemField);
-        elemField = new org.apache.axis.description.ElementDesc();
-        elemField.setFieldName("taxRegionId");
-        elemField.setXmlName(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "TaxRegionId"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"));
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
     }

@@ -226,17 +226,17 @@ public class GetTaxRequest extends BaseRequest  implements java.io.Serializable 
      * </p>
      * <p>
      * The standard values for the CustomerUsageType (A-L).<br/>
-        A - Federal Government<br/>
-        B - State/Local Govt.<br/>
-        C - Tribal Government<br/>
-        D - Foreign Diplomat<br/>
-        E - Charitable Organization<br/>
-        F - Religious/Education<br/>
-        G - Resale<br/>
-        H - Agricultural Production<br/>
-        I - Industrial Prod/Mfg.<br/>
-        J - Direct Pay Permit<br/>
-        K - Direct Mail<br/>
+        A – Federal Government<br/>
+        B – State/Local Govt.<br/>
+        C – Tribal Government<br/>
+        D – Foreign Diplomat<br/>
+        E – Charitable Organization<br/>
+        F – Religious/Education<br/>
+        G – Resale<br/>
+        H – Agricultural Production<br/>
+        I – Industrial Prod/Mfg.<br/>
+        J – Direct Pay Permit<br/>
+        K – Direct Mail<br/>
         L - Other<br/>
      * </p>
      * @param customerUsageType

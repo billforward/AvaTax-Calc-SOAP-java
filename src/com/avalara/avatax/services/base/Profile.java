@@ -40,7 +40,7 @@ public class Profile
     private String name;
     private String client;
 
-    private static final String adapter = "avatax4j,11.2.0.0";
+    private static final String adapter = "avatax4j,11.1.0.0";
 
     private String machine;
 
