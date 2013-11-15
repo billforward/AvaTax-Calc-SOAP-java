@@ -9,7 +9,7 @@ package com.avalara.avatax.services.tax;
 
 /**
  * Object representation of an Address with fields for multiple address lines, city,
- * region, postal code and country.
+ * region, postal, country, latitude and longitude.
  */
 public class BaseAddress  implements java.io.Serializable {
 
@@ -27,6 +27,8 @@ public class BaseAddress  implements java.io.Serializable {
     private java.lang.String region;
     private java.lang.String postalCode;
     private java.lang.String country;
+    private java.lang.String latitude;
+    private java.lang.String longitude;
     private int taxRegionId;
     /**
      * Default Constructor for BaseAddress object.
@@ -43,6 +45,8 @@ public class BaseAddress  implements java.io.Serializable {
      * @param region
      * @param postalCode
      * @param country
+     * @param latitude
+     * @param longitude
      */
     private BaseAddress(
             java.lang.String addressCode,
@@ -53,6 +57,8 @@ public class BaseAddress  implements java.io.Serializable {
             java.lang.String region,
             java.lang.String postalCode,
             java.lang.String country,
+            java.lang.String latitude,
+            java.lang.String longitude,
             int taxRegionId) {
         this.addressCode = addressCode;
         this.line1 = line1;
@@ -63,6 +69,8 @@ public class BaseAddress  implements java.io.Serializable {
         this.postalCode = postalCode;
         this.country = country;
         this.taxRegionId = taxRegionId;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
 
@@ -225,6 +233,39 @@ public class BaseAddress  implements java.io.Serializable {
         this.country = country;
     }
 
+    /**
+     * Gets the latitude value for this BaseAddress.
+     * @return latitude
+     */
+    public String getLatitude() {
+        return latitude;
+    }
+
+    /**
+     * Sets the latitude value for this BaseAddress.
+     * @param latitude
+     */
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+
+    /**
+     * Gets the longitude value for this BaseAddress.
+     * @return longitude
+     */
+    public String getLongitude() {
+        return longitude;
+    }
+
+    /**
+     * Sets the longitude value for this BaseAddress.
+     * @param longitude
+     */
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
     private java.lang.Object __equalsCalc = null;
 
     /**
@@ -290,7 +331,13 @@ public class BaseAddress  implements java.io.Serializable {
                 ((this.country==null && other.getCountry()==null) ||
                         (this.country!=null &&
                                 this.country.equals(other.getCountry()))) &&
-                this.taxRegionId == other.getTaxRegionId();
+                this.taxRegionId == other.getTaxRegionId() &&
+                ((this.latitude==null && other.getLatitude()==null) ||
+                        (this.latitude!=null &&
+                                this.latitude.equals(other.getLatitude()))) &&
+                ((this.longitude==null && other.getLongitude()==null) ||
+                        (this.longitude!=null &&
+                                this.longitude.equals(other.getLongitude())));
         __equalsCalc = null;
         return _equals;
     }
@@ -328,7 +375,14 @@ public class BaseAddress  implements java.io.Serializable {
                                 this.postalCode.equals(other.getPostalCode()))) &&
                 ((this.country==null && other.getCountry()==null) ||
                         (this.country!=null &&
-                                this.country.equals(other.getCountry())));
+                                this.country.equals(other.getCountry()))) &&
+                this.taxRegionId == other.getTaxRegionId() &&
+                ((this.latitude==null && other.getLatitude()==null) ||
+                        (this.latitude!=null &&
+                                this.latitude.equals(other.getLatitude()))) &&
+                ((this.longitude==null && other.getLongitude()==null) ||
+                        (this.longitude!=null &&
+                                this.longitude.equals(other.getLongitude())));
         __eqivCalc = null;
         return _equivalent;
     }
@@ -374,6 +428,12 @@ public class BaseAddress  implements java.io.Serializable {
             _hashCode += getCountry().hashCode();
         }
         _hashCode += getTaxRegionId();
+        if (getLatitude() != null) {
+            _hashCode += getLatitude().hashCode();
+        }
+        if (getLongitude() != null) {
+            _hashCode += getLatitude().hashCode();
+        }
         __hashCodeCalc = false;
         return _hashCode;
     }
@@ -444,6 +504,20 @@ public class BaseAddress  implements java.io.Serializable {
         elemField.setFieldName("taxRegionId");
         elemField.setXmlName(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "TaxRegionId"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"));
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("latitude");
+        elemField.setXmlName(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "Latitude"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setMinOccurs(0);
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("longitude");
+        elemField.setXmlName(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "Longitude"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setMinOccurs(0);
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
     }

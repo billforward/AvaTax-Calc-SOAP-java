@@ -60,6 +60,8 @@ public class Address  implements java.io.Serializable {
     private java.lang.String region;
     private java.lang.String postalCode;
     private java.lang.String country;
+    private java.lang.String latitude;
+    private java.lang.String longitude;
     private int taxRegionId;
 
     /**
@@ -79,6 +81,8 @@ public class Address  implements java.io.Serializable {
      * @param region
      * @param postalCode
      * @param country
+     * @param latitude
+     * @param longitude
      */
     private Address(
             java.lang.String addressCode,
@@ -89,7 +93,9 @@ public class Address  implements java.io.Serializable {
             java.lang.String region,
             java.lang.String postalCode,
             java.lang.String country,
-            int taxRegionId) {
+            int taxRegionId,
+            java.lang.String latitude,
+            java.lang.String longitude) {
         this.addressCode = addressCode;
         this.line1 = line1;
         this.line2 = line2;
@@ -99,6 +105,8 @@ public class Address  implements java.io.Serializable {
         this.postalCode = postalCode;
         this.country = country;
         this.taxRegionId = taxRegionId;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
 
@@ -287,6 +295,42 @@ public class Address  implements java.io.Serializable {
         this.taxRegionId = taxRegionId;
     }
 
+    /**
+     * Gets the Latitude of Address.
+     *
+     * @return latitude - Latitude
+     */
+    public java.lang.String getLatitude() {
+        return latitude;
+    }
+
+    /**
+     * Sets the Latitude Value for this Address.
+     *
+     * @param latitude  - Latitude
+     */
+    public void setLatitude(java.lang.String latitude) {
+        this.latitude = latitude;
+    }
+
+    /**
+     * Gets the Longitude of Address.
+     *
+     * @return longitude - Longitude
+     */
+    public java.lang.String getLongitude() {
+        return longitude;
+    }
+
+    /**
+     * Sets the Longitude Value for this Address.
+     *
+     * @param longitude  - Longitude
+     */
+    public void setLongitude(java.lang.String longitude) {
+        this.longitude = longitude;
+    }
+
     private java.lang.Object __equalsCalc = null;
 
     //TODO: The address .equals function does not agree with the documentation; it does not case-insenstively compare strings as written
@@ -374,7 +418,14 @@ public class Address  implements java.io.Serializable {
                                 this.postalCode.equals(other.getPostalCode()))) &&
                 ((this.country==null && other.getCountry()==null) ||
                         (this.country!=null &&
-                                this.country.equals(other.getCountry())));
+                                this.country.equals(other.getCountry())))&&
+                ((this.latitude==null && other.getLatitude()==null) ||
+                        (this.latitude!=null &&
+                                this.latitude.equals(other.getLatitude())))&&
+                ((this.longitude==null && other.getLongitude()==null) ||
+                        (this.longitude!=null &&
+                                this.longitude.equals(other.getLongitude())))&&
+                this.taxRegionId == other.getTaxRegionId();
         __equalsCalc = null;
         return _equals;
     }
@@ -415,6 +466,12 @@ public class Address  implements java.io.Serializable {
         }
         if (getCountry() != null) {
             _hashCode += getCountry().hashCode();
+        }
+        if (getLatitude() != null) {
+            _hashCode += getLatitude().hashCode();
+        }
+        if (getLongitude() != null) {
+            _hashCode += getLongitude().hashCode();
         }
         __hashCodeCalc = false;
         return _hashCode;
@@ -478,6 +535,26 @@ public class Address  implements java.io.Serializable {
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("country");
         elemField.setXmlName(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "Country"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setMinOccurs(0);
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("taxRegionId");
+        elemField.setXmlName(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "TaxRegionId"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"));
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("latitude");
+        elemField.setXmlName(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "Latitude"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setMinOccurs(0);
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("longitude");
+        elemField.setXmlName(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "Longitude"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
         elemField.setMinOccurs(0);
         elemField.setNillable(false);

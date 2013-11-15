@@ -152,7 +152,7 @@ public class TaxSvcSoapStub extends com.avalara.avatax.services.base.BaseSvcSoap
 
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName("AdjustTax");
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "Operations"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "AdjustTaxRequest"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         oper.addParameter(param);
         oper.setReturnType(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "AdjustTaxResult"));
         oper.setReturnClass(com.avalara.avatax.services.tax.AdjustTaxResult.class);
@@ -860,7 +860,7 @@ public class TaxSvcSoapStub extends com.avalara.avatax.services.base.BaseSvcSoap
             throw new org.apache.axis.NoEndPointException();
         }
         org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[6]);
+        _call.setOperation(_operations[8]);
         _call.setUseSOAPAction(true);
         _call.setSOAPActionURI("http://avatax.avalara.com/services/AdjustTax");
         _call.setEncodingStyle(null);

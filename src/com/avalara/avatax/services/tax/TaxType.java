@@ -63,6 +63,11 @@ public class TaxType implements java.io.Serializable {
     public static final java.lang.String _Rental = "Rental";
 
     /**
+     * Medical Excise
+     */
+    public static final java.lang.String _Excise = "Excise";
+
+    /**
      *  Sales tax.
      */
     public static final TaxType Sales = new TaxType(_Sales);
@@ -102,6 +107,10 @@ public class TaxType implements java.io.Serializable {
      */
     public static final TaxType Rental = new TaxType(_Rental);
 
+    /**
+     * Medical Excise
+     */
+    public static final TaxType Excise = new TaxType(_Excise);
 
     public java.lang.String getValue() { return _value_;}
     public static TaxType fromValue(java.lang.String value)

@@ -46,6 +46,7 @@ public class GetTaxRequest extends BaseRequest  implements java.io.Serializable 
     private java.util.Date paymentDate;
     private java.math.BigDecimal exchangeRate;
     private java.util.Date exchangeRateEffDate;
+    private java.lang.String businessIdentificationNo;
 
     /**
      * Initializes a new instance of the class.
@@ -645,6 +646,25 @@ public class GetTaxRequest extends BaseRequest  implements java.io.Serializable 
         this.exchangeRateEffDate = exchangeRateEffDate;
     }
 
+    /**
+     * Gets the businessIdentificationNo value.
+     *
+     * @return businessIdentificationNo
+     */
+    public java.lang.String getBusinessIdentificationNo() {
+        return businessIdentificationNo;
+    }
+
+
+    /**
+     * Sets the businessIdentificationNo value for this GetTaxRequest.
+     *
+     * @param businessIdentificationNo
+     */
+    public void setBusinessIdentificationNo(java.lang.String businessIdentificationNo) {
+        this.businessIdentificationNo = businessIdentificationNo;
+    }
+
     private java.lang.Object __equalsCalc = null;
     public synchronized boolean equals(java.lang.Object obj) {
         if (!(obj instanceof GetTaxRequest)) return false;
@@ -730,7 +750,10 @@ public class GetTaxRequest extends BaseRequest  implements java.io.Serializable 
                                 this.exchangeRate.equals(other.getExchangeRate()))) &&
                 ((this.exchangeRateEffDate==null && other.getExchangeRateEffDate()==null) ||
                         (this.exchangeRateEffDate!=null &&
-                                this.exchangeRateEffDate.equals(other.getExchangeRateEffDate())));
+                                this.exchangeRateEffDate.equals(other.getExchangeRateEffDate()))) &&
+                ((this.businessIdentificationNo==null && other.getBusinessIdentificationNo()==null) ||
+                        (this.businessIdentificationNo!=null &&
+                                this.businessIdentificationNo.equals(other.getBusinessIdentificationNo())));
         __equalsCalc = null;
         return _equals;
     }
@@ -822,6 +845,9 @@ public class GetTaxRequest extends BaseRequest  implements java.io.Serializable 
         }
         if (getExchangeRateEffDate() != null) {
             _hashCode += getExchangeRateEffDate().hashCode();
+        }
+        if (getBusinessIdentificationNo() != null) {
+            _hashCode += getBusinessIdentificationNo().hashCode();
         }
             __hashCodeCalc = false;
             return _hashCode;
@@ -997,6 +1023,13 @@ public class GetTaxRequest extends BaseRequest  implements java.io.Serializable 
         elemField.setFieldName("exchangeRateEffDate");
         elemField.setXmlName(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "ExchangeRateEffDate"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "date"));
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("businessIdentificationNo");
+        elemField.setXmlName(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "BusinessIdentificationNo"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setMinOccurs(0);
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
     }

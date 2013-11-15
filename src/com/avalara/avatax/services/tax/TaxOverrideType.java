@@ -29,6 +29,7 @@ public class TaxOverrideType implements java.io.Serializable {
     public static final java.lang.String _TaxAmount = "TaxAmount";
     public static final java.lang.String _Exemption = "Exemption";
     public static final java.lang.String _TaxDate = "TaxDate";
+    public static final java.lang.String _AccruedTaxAmount = "AccruedTaxAmount";
 
     /**
      * Default value.
@@ -50,6 +51,10 @@ public class TaxOverrideType implements java.io.Serializable {
      */
     public static final TaxOverrideType TaxDate = new TaxOverrideType(_TaxDate);
 
+   /**
+     * The AccuredTaxAmount overrides the total tax for the document & is stored in TaxCalculated field.
+     */
+    public static final TaxOverrideType AccruedTaxAmount = new TaxOverrideType(_AccruedTaxAmount);
     
     public java.lang.String getValue() { return _value_;}
 

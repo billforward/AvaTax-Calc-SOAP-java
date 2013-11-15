@@ -43,6 +43,7 @@ public class Line  implements java.io.Serializable {
     private java.lang.String description;
     private com.avalara.avatax.services.tax.TaxOverride taxOverride;
     private boolean taxIncluded;
+    private java.lang.String businessIdentificationNo;
 
     /**
      * Creates a new line object.
@@ -85,7 +86,8 @@ public class Line  implements java.io.Serializable {
             java.lang.String exemptionNo,
             java.lang.String customerUsageType,
             java.lang.String description,
-           com.avalara.avatax.services.tax.TaxOverride taxOverride) {
+           com.avalara.avatax.services.tax.TaxOverride taxOverride,
+           java.lang.String businessIdentificationNo) {
         this.no = no;
         this.originCode = originCode;
         this.destinationCode = destinationCode;
@@ -101,6 +103,7 @@ public class Line  implements java.io.Serializable {
         this.customerUsageType = customerUsageType;
         this.description = description;
            this.taxOverride = taxOverride;
+        this.businessIdentificationNo = businessIdentificationNo ;
     }
 
 
@@ -511,6 +514,28 @@ public class Line  implements java.io.Serializable {
         this.taxIncluded = taxIncluded;
     }
 
+
+    /**
+     * Gets the Business Identification No..
+     *
+     * @return businessIdentificationNo
+     */
+
+    public String getBusinessIdentificationNo() {
+        return businessIdentificationNo;
+    }
+
+
+    /**
+     * Sets the Business Identification No..
+     *
+     * @param businessIdentificationNo
+     */
+
+    public void setBusinessIdentificationNo(String businessIdentificationNo) {
+        this.businessIdentificationNo = businessIdentificationNo;
+    }
+
     private java.lang.Object __equalsCalc = null;
 
     public synchronized boolean equals(java.lang.Object obj) {
@@ -567,7 +592,9 @@ public class Line  implements java.io.Serializable {
             ((this.taxOverride==null && other.getTaxOverride()==null) || 
              (this.taxOverride!=null &&
               this.taxOverride.equals(other.getTaxOverride()))) &&
-                this.taxIncluded == other.isTaxIncluded();
+                this.taxIncluded == other.isTaxIncluded() &&
+                ((this.businessIdentificationNo==null && other.getBusinessIdentificationNo()==null) ||
+                (this.businessIdentificationNo!=null && this.businessIdentificationNo.equals(other.getBusinessIdentificationNo())));
         __equalsCalc = null;
         return _equals;
     }
@@ -629,6 +656,9 @@ public class Line  implements java.io.Serializable {
         }
         if (getTaxOverride() != null) {
             _hashCode += getTaxOverride().hashCode();
+        }
+        if (getBusinessIdentificationNo() != null) {
+            _hashCode += getBusinessIdentificationNo().hashCode();
         }
         _hashCode += (isTaxIncluded() ? Boolean.TRUE : Boolean.FALSE).hashCode();
         __hashCodeCalc = false;
@@ -747,6 +777,13 @@ public class Line  implements java.io.Serializable {
         elemField.setFieldName("taxIncluded");
         elemField.setXmlName(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "TaxIncluded"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "boolean"));
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("businessIdentificationNo");
+        elemField.setXmlName(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "BusinessIdentificationNo"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setMinOccurs(0);
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
     }

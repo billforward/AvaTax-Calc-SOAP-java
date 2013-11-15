@@ -31,6 +31,8 @@ public class DocumentType implements java.io.Serializable {
     private static final java.lang.String _ReturnOrder = "ReturnOrder";
     private static final java.lang.String _ReturnInvoice = "ReturnInvoice";
     private static final java.lang.String _Any = "Any";
+    private static final java.lang.String _InventoryTransferInvoice = "InventoryTransferInvoice";
+    private static final java.lang.String _InventoryTransferOrder = "InventoryTransferOrder";
 
     /**
      *  Sales Order, estimate or quote. This is a temporary document type and is not saved in tax history.
@@ -70,6 +72,19 @@ public class DocumentType implements java.io.Serializable {
     public static final DocumentType ReturnInvoice = new DocumentType(_ReturnInvoice);
 
     public static final DocumentType Any = new DocumentType(_Any);
+
+    /**
+     *  The document is a permanent Inventory Transfer invoice; document and tax calculation results are
+     * saved in the tax history {@link GetTaxResult} will return with a {@link DocStatus}
+     * of <b>Saved</b>.
+     */
+    public static final DocumentType InventoryTransferInvoice = new DocumentType(_InventoryTransferInvoice);
+
+    /**
+     * InventoryTransfer order, estimate, or quote. This is a temporary document type and is not saved in tax history.
+     * {@link GetTaxResult} will return with a {@link DocStatus} of <b>Temporary</b>.
+     */
+    public static final DocumentType InventoryTransferOrder = new DocumentType(_InventoryTransferOrder);
 
     public java.lang.String getValue() { return _value_;}
     public static DocumentType fromValue(java.lang.String value)
