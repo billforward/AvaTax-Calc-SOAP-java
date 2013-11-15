@@ -46,10 +46,11 @@ public class TaxTransactionSample {
             getTaxRequest.setOriginCode("Origin");                       // R: Value representing the Origin Address
             getTaxRequest.setDestinationCode("Dest");                   // R: Value representing the Destination Address
             getTaxRequest.setDetailLevel(DetailLevel.Tax);             // R: Chose Summary, Document, Line or Tax - varying levels of results detail 
-            getTaxRequest.setCommit(false);                           // O: Default is "false" - Set to "true" to commit the Document
-            getTaxRequest.setLocationCode("MyLocation");             // O: String - for reporting purposes
-                                                                    //      Store Location, Outlet Id, or Outlet code
-                                                                   //       A number assigned by the State which identifies a Store location
+            getTaxRequest.setBusinessIdentificationNo("123456");      // O: Enter VAT or Business Identification Number 
+            getTaxRequest.setCommit(false);                          // O: Default is "false" - Set to "true" to commit the Document
+            getTaxRequest.setLocationCode("MyLocation");            // O: String - for reporting purposes
+                                                                   //      Store Location, Outlet Id, or Outlet code
+                                                                  //       A number assigned by the State which identifies a Store location
 
 //          Begin Address Section
 //          Add the origin and destination addresses referred to by the
