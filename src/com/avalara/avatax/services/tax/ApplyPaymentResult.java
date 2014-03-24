@@ -13,10 +13,46 @@ public class ApplyPaymentResult  extends com.avalara.avatax.services.tax.BaseRes
     public ApplyPaymentResult() {
     }
 
+    private java.lang.String docId;
     
-    
-
     private java.lang.Object __equalsCalc = null;
+	
+	private ApplyPaymentResult(
+		java.lang.String docId
+		)
+	{
+		this.docId = docId;
+	}
+	
+	/**
+     * Gets the internal reference code used by the client application;  This is used for
+     * operations such as Post and GetTaxHistory.
+     * <p>
+     * See {@link ApplyPaymentResult#getDocId} on <b>ApplyPaymentRequest</b> for more information
+     * about this member.
+     * </p>
+     *
+     * @return docId
+     */
+    public java.lang.String getDocId() {
+        return docId;
+    }
+
+
+    /**
+     * Sets the internal reference code used by the client application;  This is used for
+     * operations such as Post and GetTaxHistory.
+     * <p>
+     * See {@link ApplyPaymentResult#getDocId} on <b>ApplyPaymentRequest</b> for more information
+     * about this member.
+     * </p>
+     *
+     * @param docId
+     */
+    public void setDocId(java.lang.String docId) {
+        this.docId = docId;
+	}
+	
     public synchronized boolean equals(java.lang.Object obj) {
         if (!(obj instanceof ApplyPaymentResult)) return false;
         ApplyPaymentResult other = (ApplyPaymentResult) obj;
@@ -27,7 +63,10 @@ public class ApplyPaymentResult  extends com.avalara.avatax.services.tax.BaseRes
         }
         __equalsCalc = obj;
         boolean _equals;
-        _equals = super.equals(obj); 
+        _equals = super.equals(obj) &&
+		((this.docId==null && other.getDocId()==null) ||
+                        (this.docId!=null &&
+                                this.docId.equals(other.getDocId())));
 
         __equalsCalc = null;
         return _equals;
@@ -40,7 +79,9 @@ public class ApplyPaymentResult  extends com.avalara.avatax.services.tax.BaseRes
         }
         __hashCodeCalc = true;
         int _hashCode = super.hashCode();
-        
+        if (getDocId() != null) {
+            _hashCode += getDocId().hashCode();
+        }
         __hashCodeCalc = false;
         return _hashCode;
     }
@@ -51,7 +92,14 @@ public class ApplyPaymentResult  extends com.avalara.avatax.services.tax.BaseRes
 
     static {
         typeDesc.setXmlType(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "ApplyPaymentResult"));
-        
+        org.apache.axis.description.ElementDesc elemField = new org.apache.axis.description.ElementDesc();
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("docId");
+        elemField.setXmlName(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "DocId"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setMinOccurs(0);
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
     }
 
     /**

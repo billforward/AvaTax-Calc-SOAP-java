@@ -2,6 +2,7 @@
  * PostTaxResult.java
  *
  * This file was auto-generated from WSDL
+ * This file was auto-generated from WSDL
  * by the Apache Axis 1.2 May 03, 2005 (02:20:24 EDT) WSDL2Java emitter.
  */
 
@@ -28,7 +29,7 @@ public class PostTaxResult  extends com.avalara.avatax.services.tax.BaseResult  
     public PostTaxResult() {
     }
 
-    
+    private java.lang.String docId;
 
     private java.lang.Object __equalsCalc = null;
 
@@ -39,6 +40,42 @@ public class PostTaxResult  extends com.avalara.avatax.services.tax.BaseResult  
      * @param obj
      * @return true or false, indicating if the two objects are equal.
      */
+	
+	 private PostTaxResult(
+		java.lang.String docId
+		)
+	{
+		this.docId = docId;
+	}
+	
+	/**
+     * Gets the internal reference code used by the client application;  This is used for
+     * operations such as Post and GetTaxHistory.
+     * <p>
+     * See {@link GetTaxRequest#getDocId} on <b>GetTaxRequest</b> for more information
+     * about this member.
+     * </p>
+     *
+     * @return docId
+     */
+    public java.lang.String getDocId() {
+        return docId;
+    }
+
+
+    /**
+     * Sets the internal reference code used by the client application;  This is used for
+     * operations such as Post and GetTaxHistory.
+     * <p>
+     * See {@link GetTaxRequest#getDocId} on <b>GetTaxRequest</b> for more information
+     * about this member.
+     * </p>
+     *
+     * @param docId
+     */
+    public void setDocId(java.lang.String docId) {
+        this.docId = docId;
+    }
     public synchronized boolean equals(java.lang.Object obj) {
         if (!(obj instanceof PostTaxResult)) return false;
         PostTaxResult other = (PostTaxResult) obj;
@@ -49,7 +86,10 @@ public class PostTaxResult  extends com.avalara.avatax.services.tax.BaseResult  
         }
         __equalsCalc = obj;
         boolean _equals;
-        _equals = super.equals(obj);
+        _equals = super.equals(obj) &&
+		((this.docId==null && other.getDocId()==null) ||
+                        (this.docId!=null &&
+                                this.docId.equals(other.getDocId())));
         __equalsCalc = null;
         return _equals;
     }
@@ -68,7 +108,10 @@ public class PostTaxResult  extends com.avalara.avatax.services.tax.BaseResult  
             return 0;
         }
         __hashCodeCalc = true;
-        int _hashCode = super.hashCode();        
+        int _hashCode = super.hashCode();
+		if (getDocId() != null) {
+            _hashCode += getDocId().hashCode();
+        }
         __hashCodeCalc = false;
         return _hashCode;
     }
@@ -79,7 +122,14 @@ public class PostTaxResult  extends com.avalara.avatax.services.tax.BaseResult  
 
     static {
         typeDesc.setXmlType(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "PostTaxResult"));
-        
+        org.apache.axis.description.ElementDesc elemField = new org.apache.axis.description.ElementDesc();
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("docId");
+        elemField.setXmlName(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "DocId"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setMinOccurs(0);
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
     }
 
 

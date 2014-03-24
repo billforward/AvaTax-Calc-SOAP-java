@@ -26,6 +26,8 @@ public class GetTaxHistoryRequest  implements java.io.Serializable {
     private java.lang.String companyCode;
 
     private com.avalara.avatax.services.tax.DocumentType docType;
+	
+	private java.lang.String docId;
 
     private java.lang.String docCode;
 
@@ -44,17 +46,20 @@ public class GetTaxHistoryRequest  implements java.io.Serializable {
      *     
      * @param companyCode
      * @param docType
+	 * @param docId;
      * @param docCode
      * @param detailLevel
      */
     private GetTaxHistoryRequest(        
             java.lang.String companyCode,
             com.avalara.avatax.services.tax.DocumentType docType,
+			java.lang.String docId,
             java.lang.String docCode,
             com.avalara.avatax.services.tax.DetailLevel detailLevel) {
 
         this.companyCode = companyCode;
         this.docType = docType;
+		this.docId = docId;
         this.docCode = docCode;
         this.detailLevel = detailLevel;
     }
@@ -123,6 +128,27 @@ public class GetTaxHistoryRequest  implements java.io.Serializable {
     public void setDocCode(java.lang.String docCode) {
         this.docCode = docCode;
     }
+	
+	/**
+     * Gets the Document Id, that is the internal reference code used by the client application.
+     * <br>If docId is specified, this is not needed.
+     *
+     * @return docId
+     */
+    public java.lang.String getDocId() {
+        return docId;
+    }
+
+
+    /**
+     * Sets the Document Id, that is the internal reference code used by the client application.
+     * <br>If docId is specified, this is not needed.
+     *
+     * @param docId
+     */
+    public void setDocId(java.lang.String docId) {
+        this.docId = docId;
+    }
 
 
     /**
@@ -169,6 +195,9 @@ public class GetTaxHistoryRequest  implements java.io.Serializable {
                 ((this.docType==null && other.getDocType()==null) ||
                         (this.docType!=null &&
                                 this.docType.equals(other.getDocType()))) &&
+				((this.docId==null && other.getDocId()==null) ||
+                        (this.docId!=null &&
+                                this.docId.equals(other.getDocId()))) &&
                 ((this.docCode==null && other.getDocCode()==null) ||
                         (this.docCode!=null &&
                                 this.docCode.equals(other.getDocCode()))) &&
@@ -200,6 +229,9 @@ public class GetTaxHistoryRequest  implements java.io.Serializable {
         if (getDocType() != null) {
             _hashCode += getDocType().hashCode();
         }
+		if (getDocId() != null) {
+            _hashCode += getDocId().hashCode();
+        }
         if (getDocCode() != null) {
             _hashCode += getDocCode().hashCode();
         }
@@ -228,6 +260,13 @@ public class GetTaxHistoryRequest  implements java.io.Serializable {
         elemField.setFieldName("docType");
         elemField.setXmlName(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "DocType"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "DocumentType"));
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+		elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("docId");
+        elemField.setXmlName(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "DocId"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setMinOccurs(0);
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();

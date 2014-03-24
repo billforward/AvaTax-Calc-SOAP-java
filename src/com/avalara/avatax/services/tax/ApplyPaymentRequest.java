@@ -24,6 +24,7 @@ public class ApplyPaymentRequest extends BaseRequest implements java.io.Serializ
     
     private java.lang.String companyCode;
     private com.avalara.avatax.services.tax.DocumentType docType;
+	private java.lang.String docId;
     private java.lang.String docCode;
     private java.util.Calendar paymentDate;
 
@@ -34,10 +35,12 @@ public class ApplyPaymentRequest extends BaseRequest implements java.io.Serializ
            java.lang.String companyCode,
            com.avalara.avatax.services.tax.DocumentType docType,
            java.lang.String docCode,
+		   java.lang.String docId,
            java.util.Calendar paymentDate) {
 
            this.companyCode = companyCode;
            this.docType = docType;
+		   this.docId = docId;
            this.docCode = docCode;
            this.paymentDate = paymentDate;
     }
@@ -83,6 +86,25 @@ public class ApplyPaymentRequest extends BaseRequest implements java.io.Serializ
      */
     public void setDocType(com.avalara.avatax.services.tax.DocumentType docType) {
         this.docType = docType;
+    }
+	
+	/**
+     * Gets the docId value for this ApplyPaymentRequest.
+     * 
+     * @return docId
+     */
+    public java.lang.String getDocId() {
+        return docId;
+    }
+
+
+    /**
+     * Sets the docCode value for this ApplyPaymentRequest.
+     * 
+     * @param docCode
+     */
+    public void setDocId(java.lang.String docId) {
+        this.docId = docId;
     }
 
 
@@ -143,6 +165,9 @@ public class ApplyPaymentRequest extends BaseRequest implements java.io.Serializ
             ((this.docType==null && other.getDocType()==null) || 
              (this.docType!=null &&
               this.docType.equals(other.getDocType()))) &&
+			((this.docId==null && other.getDocId()==null) || 
+             (this.docId!=null &&
+              this.docId.equals(other.getDocId()))) &&
             ((this.docCode==null && other.getDocCode()==null) || 
              (this.docCode!=null &&
               this.docCode.equals(other.getDocCode()))) &&
@@ -165,6 +190,9 @@ public class ApplyPaymentRequest extends BaseRequest implements java.io.Serializ
         }
         if (getDocType() != null) {
             _hashCode += getDocType().hashCode();
+        }
+		if (getDocId() != null) {
+            _hashCode += getDocId().hashCode();
         }
         if (getDocCode() != null) {
             _hashCode += getDocCode().hashCode();
@@ -193,6 +221,13 @@ public class ApplyPaymentRequest extends BaseRequest implements java.io.Serializ
         elemField.setFieldName("docType");
         elemField.setXmlName(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "DocType"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "DocumentType"));
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+		elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("docId");
+        elemField.setXmlName(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "DocId"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setMinOccurs(0);
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();

@@ -32,7 +32,7 @@ import java.net.UnknownHostException;
  * </pre>
  *
  * @author brianh
- * Copyright (c) 2005, Avalara.  All rights reserved.
+ * Copyright (c) 2005, Avalara.  All rights reserved .
  */
 public class Profile
 {
@@ -40,7 +40,7 @@ public class Profile
     private String name;
     private String client;
 
-    private static final String adapter = "avatax4j,13.2.1.0";
+    private static final String adapter = "avatax4j,14.2.0.0";
 
     private String machine;
 
@@ -52,7 +52,7 @@ public class Profile
      */
     public Profile()
     {
-        name = "5.3.0.1";
+        name = "13.7.0.0";
         client = "";
         try
         {

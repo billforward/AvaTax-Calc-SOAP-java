@@ -16,6 +16,8 @@ package com.avalara.avatax.services.tax;
 public class GetTaxResult  extends com.avalara.avatax.services.tax.BaseResult  implements java.io.Serializable {
 
     private com.avalara.avatax.services.tax.DocumentType docType;
+	
+	private java.lang.String docId;
 
     private java.lang.String docCode;
 
@@ -61,6 +63,7 @@ public class GetTaxResult  extends com.avalara.avatax.services.tax.BaseResult  i
      *
      * @param docType
      * @param docCode
+	 * @param docId
      * @param docDate
      * @param docStatus
      * @param reconciled
@@ -74,6 +77,7 @@ public class GetTaxResult  extends com.avalara.avatax.services.tax.BaseResult  i
      */
     private GetTaxResult(
             com.avalara.avatax.services.tax.DocumentType docType,
+			java.lang.String docId,
             java.lang.String docCode,
             java.util.Date docDate,
             com.avalara.avatax.services.tax.DocStatus docStatus,
@@ -95,6 +99,7 @@ public class GetTaxResult  extends com.avalara.avatax.services.tax.BaseResult  i
            )
     {
         this.docType = docType;
+		this.docId = docId;
         this.docCode = docCode;
         this.docDate = docDate;
         this.docStatus = docStatus;
@@ -170,7 +175,34 @@ public class GetTaxResult  extends com.avalara.avatax.services.tax.BaseResult  i
     public void setDocCode(java.lang.String docCode) {
         this.docCode = docCode;
     }
+	/**
+     * Gets the internal reference code used by the client application;  This is used for
+     * operations such as Post and GetTaxHistory.
+     * <p>
+     * See {@link GetTaxResult#getDocId} on <b>GetTaxResult</b> for more information
+     * about this member.
+     * </p>
+     *
+     * @return docId
+     */
+    public java.lang.String getDocId() {
+        return docId;
+    }
 
+
+    /**
+     * Sets the internal reference code used by the client application;  This is used for
+     * operations such as Post and GetTaxHistory.
+     * <p>
+     * See {@link GetTaxRequest#getDocId} on <b>GetTaxRequest</b> for more information
+     * about this member.
+     * </p>
+     *
+     * @param docId
+     */
+    public void setDocId(java.lang.String docId) {
+        this.docId = docId;
+    }
 
     /**
      * Gets the date on the invoice, purchase order, etc.
@@ -580,6 +612,9 @@ public class GetTaxResult  extends com.avalara.avatax.services.tax.BaseResult  i
                 ((this.docCode==null && other.getDocCode()==null) ||
                         (this.docCode!=null &&
                                 this.docCode.equals(other.getDocCode()))) &&
+				((this.docId==null && other.getDocId()==null) ||
+                        (this.docId!=null &&
+                                this.docId.equals(other.getDocId()))) &&
                 ((this.docDate==null && other.getDocDate()==null) ||
                         (this.docDate!=null &&
                                 this.docDate.equals(other.getDocDate()))) &&
@@ -648,7 +683,10 @@ public class GetTaxResult  extends com.avalara.avatax.services.tax.BaseResult  i
         if (getDocType() != null) {
             _hashCode += getDocType().hashCode();
         }
-        if (getDocCode() != null) {
+        if (getDocId() != null) {
+            _hashCode += getDocId().hashCode();
+        }
+		if (getDocCode() != null) {
             _hashCode += getDocCode().hashCode();
         }
         if (getDocDate() != null) {
@@ -717,6 +755,13 @@ public class GetTaxResult  extends com.avalara.avatax.services.tax.BaseResult  i
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("docCode");
         elemField.setXmlName(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "DocCode"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setMinOccurs(0);
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+		elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("docId");
+        elemField.setXmlName(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "DocId"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
         elemField.setMinOccurs(0);
         elemField.setNillable(false);

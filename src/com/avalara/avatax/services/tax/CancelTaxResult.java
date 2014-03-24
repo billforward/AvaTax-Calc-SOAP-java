@@ -22,13 +22,47 @@ public class CancelTaxResult  extends com.avalara.avatax.services.tax.BaseResult
      */
     public CancelTaxResult() {
     }
-
-    
-
-
-    
-
+	
+	private java.lang.String docId;
+   
     private java.lang.Object __equalsCalc = null;
+	
+	private CancelTaxResult(
+		java.lang.String docId
+		)
+	{
+		this.docId = docId;
+	}
+	
+	/**
+     * Gets the internal reference code used by the client application;  This is used for
+     * operations such as Post and GetTaxHistory.
+     * <p>
+     * See {@link GetTaxRequest#getDocId} on <b>GetTaxRequest</b> for more information
+     * about this member.
+     * </p>
+     *
+     * @return docId
+     */
+    public java.lang.String getDocId() {
+        return docId;
+    }
+
+
+    /**
+     * Sets the internal reference code used by the client application;  This is used for
+     * operations such as Post and GetTaxHistory.
+     * <p>
+     * See {@link GetTaxRequest#getDocId} on <b>GetTaxRequest</b> for more information
+     * about this member.
+     * </p>
+     *
+     * @param docId
+     */
+    public void setDocId(java.lang.String docId) {
+        this.docId = docId;
+	}
+		
     /**
      * Determines whether the specified Object is equal to the current Object.
      * Note: In current implementation all Java Strings members of the two
@@ -46,7 +80,10 @@ public class CancelTaxResult  extends com.avalara.avatax.services.tax.BaseResult
         }
         __equalsCalc = obj;
         boolean _equals;
-        _equals = super.equals(obj) ;
+        _equals = super.equals(obj) &&
+		((this.docId==null && other.getDocId()==null) ||
+                        (this.docId!=null &&
+                                this.docId.equals(other.getDocId())));
         __equalsCalc = null;
         return _equals;
     }
@@ -66,7 +103,9 @@ public class CancelTaxResult  extends com.avalara.avatax.services.tax.BaseResult
         }
         __hashCodeCalc = true;
         int _hashCode = super.hashCode();
-        
+        if (getDocId() != null) {
+            _hashCode += getDocId().hashCode();
+        }
         __hashCodeCalc = false;
         return _hashCode;
     }
@@ -77,7 +116,14 @@ public class CancelTaxResult  extends com.avalara.avatax.services.tax.BaseResult
 
     static {
         typeDesc.setXmlType(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "CancelTaxResult"));
-        
+        org.apache.axis.description.ElementDesc elemField = new org.apache.axis.description.ElementDesc();
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("docId");
+        elemField.setXmlName(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "DocId"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setMinOccurs(0);
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
     }
 
 

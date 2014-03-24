@@ -27,6 +27,7 @@ public class CommitTaxRequest extends BaseRequest implements java.io.Serializabl
     private com.avalara.avatax.services.tax.DocumentType docType;
 
     private java.lang.String docCode;
+	private java.lang.String docId;
     private java.lang.String newDocCode;
 
     /**
@@ -47,9 +48,11 @@ public class CommitTaxRequest extends BaseRequest implements java.io.Serializabl
             java.lang.String companyCode,
             com.avalara.avatax.services.tax.DocumentType docType,
             java.lang.String docCode,
+			java.lang.String docId,
             java.lang.String newDocCode) {
         this.companyCode = companyCode;
         this.docType = docType;
+		this.docId = docId;
         this.docCode = docCode;
         this.newDocCode = newDocCode;
     }
@@ -123,6 +126,31 @@ public class CommitTaxRequest extends BaseRequest implements java.io.Serializabl
     public void setDocCode(java.lang.String docCode) {
         this.docCode = docCode;
     }
+	
+	 /**
+     *  Gets the Document Code, that is the internal reference code used by the client application.
+     * <br>If docId is specified, this is not needed.
+     *
+     * @return docId
+     */
+    public java.lang.String getDocId() {
+        return docId;
+    }
+
+
+    /**
+     *  Sets the Document Code, that is the internal reference code used by the client application.
+     * <br>If docId is specified, this is not needed.     *
+     * <p>
+     * Implementation for DocId has been updated. Some seller system generates DocId at the time of CommitTax.
+     * This enables user to provide a new DocId at the time of CommitTax call and this should overwrite the existing
+     * DocId.
+     * </p> 
+     * @param docId
+     */
+    public void setDocId(java.lang.String docId) {
+        this.docId = docId;
+    }
 
     /**
      * Gets the newDocCode value for this CommitTaxRequest.
@@ -168,6 +196,9 @@ public class CommitTaxRequest extends BaseRequest implements java.io.Serializabl
                 ((this.docType==null && other.getDocType()==null) ||
                         (this.docType!=null &&
                                 this.docType.equals(other.getDocType()))) &&
+				((this.docId==null && other.getDocId()==null) ||
+                        (this.docId!=null &&
+                                this.docId.equals(other.getDocId()))) &&
                 ((this.docCode==null && other.getDocCode()==null) ||
                         (this.docCode!=null &&
                                 this.docCode.equals(other.getDocCode())))&&
@@ -202,6 +233,9 @@ public class CommitTaxRequest extends BaseRequest implements java.io.Serializabl
         if (getDocCode() != null) {
             _hashCode += getDocCode().hashCode();
         }
+		if (getDocId() != null) {
+            _hashCode += getDocId().hashCode();
+        }
         if (getNewDocCode() != null) {
             _hashCode += getNewDocCode().hashCode();
         }
@@ -226,6 +260,13 @@ public class CommitTaxRequest extends BaseRequest implements java.io.Serializabl
         elemField.setFieldName("docType");
         elemField.setXmlName(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "DocType"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "DocumentType"));
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+		elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("docId");
+        elemField.setXmlName(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "DocId"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setMinOccurs(0);
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();

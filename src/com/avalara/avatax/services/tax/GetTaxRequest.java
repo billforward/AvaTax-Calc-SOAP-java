@@ -47,6 +47,7 @@ public class GetTaxRequest extends BaseRequest  implements java.io.Serializable 
     private java.math.BigDecimal exchangeRate;
     private java.util.Date exchangeRateEffDate;
     private java.lang.String businessIdentificationNo;
+	private java.lang.String posLaneCode;
 
     /**
      * Initializes a new instance of the class.
@@ -664,7 +665,26 @@ public class GetTaxRequest extends BaseRequest  implements java.io.Serializable 
     public void setBusinessIdentificationNo(java.lang.String businessIdentificationNo) {
         this.businessIdentificationNo = businessIdentificationNo;
     }
+	
+	/**
+     * Gets the posLaneCode value.
+     *
+     * @return posLaneCode
+     */
+    public java.lang.String getPosLaneCode() {
+        return posLaneCode;
+    }
 
+    /**
+     * Sets the posLaneCode value for this GetTaxRequest.
+     *
+     * @param posLaneCode
+     */
+    public void setPosLaneCode(java.lang.String posLaneCode) {
+        this.posLaneCode = posLaneCode;
+    }
+
+	
     private java.lang.Object __equalsCalc = null;
     public synchronized boolean equals(java.lang.Object obj) {
         if (!(obj instanceof GetTaxRequest)) return false;
@@ -753,7 +773,10 @@ public class GetTaxRequest extends BaseRequest  implements java.io.Serializable 
                                 this.exchangeRateEffDate.equals(other.getExchangeRateEffDate()))) &&
                 ((this.businessIdentificationNo==null && other.getBusinessIdentificationNo()==null) ||
                         (this.businessIdentificationNo!=null &&
-                                this.businessIdentificationNo.equals(other.getBusinessIdentificationNo())));
+                                this.businessIdentificationNo.equals(other.getBusinessIdentificationNo())))&&
+                ((this.posLaneCode==null && other.getPosLaneCode()==null) ||
+                        (this.posLaneCode!=null &&
+                                this.posLaneCode.equals(other.getPosLaneCode())));
         __equalsCalc = null;
         return _equals;
     }
@@ -848,6 +871,9 @@ public class GetTaxRequest extends BaseRequest  implements java.io.Serializable 
         }
         if (getBusinessIdentificationNo() != null) {
             _hashCode += getBusinessIdentificationNo().hashCode();
+        }
+		if (getPosLaneCode() != null) {
+            _hashCode += getPosLaneCode().hashCode();
         }
             __hashCodeCalc = false;
             return _hashCode;
@@ -1028,6 +1054,13 @@ public class GetTaxRequest extends BaseRequest  implements java.io.Serializable 
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("businessIdentificationNo");
         elemField.setXmlName(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "BusinessIdentificationNo"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setMinOccurs(0);
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+		elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("posLaneCode");
+        elemField.setXmlName(new javax.xml.namespace.QName("http://avatax.avalara.com/services", "PosLaneCode"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
         elemField.setMinOccurs(0);
         elemField.setNillable(false);
