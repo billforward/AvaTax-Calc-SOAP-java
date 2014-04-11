@@ -17,7 +17,7 @@ public class CommitTaxTest {
 
   public static void main(String args[]) {
     try {
-      TaxSvcSoap port = getTaxSvc();
+      TaxSvcSoap taxSvc = getTaxSvc();
       CommitTaxRequest commitTaxRequest = new CommitTaxRequest();
 //Required Request Parameters
       commitTaxRequest.setDocCode("INV001");
@@ -26,7 +26,7 @@ public class CommitTaxTest {
 //Optioinal
 //      commitTaxRequest.setNewDocCode("INV001-1");
 //
-      CommitTaxResult commitTaxResult = port.commitTax(commitTaxRequest);
+      CommitTaxResult commitTaxResult = taxSvc.commitTax(commitTaxRequest);
 //
       System.out.println("CommitTax Result: " + commitTaxResult.getResultCode().toString());
       System.out.println("DocID: " + commitTaxResult.getDocId().toString());
@@ -41,19 +41,19 @@ public class CommitTaxTest {
 
   protected static TaxSvcSoap getTaxSvc() throws ServiceException, SOAPException, MalformedURLException, IOException {
     TaxSvc taxSvc;
-    TaxSvcSoap port;
+    TaxSvcSoap taxSvc;
     taxSvc = new TaxSvcLocator();
-    port = taxSvc.getTaxSvcSoap(new URL(url));
+    taxSvc = taxSvc.getTaxSvcSoap(new URL(url));
 // Set Client Profile
     Profile profile = new Profile();
     profile.setClient(profileName);
-    port.setProfile(profile);
+    taxSvc.setProfile(profile);
 // Set security
     Security security = new Security();
     security.setAccount(account);
     security.setLicense(license);
-    port.setSecurity(security);
-    return port;
+    taxSvc.setSecurity(security);
+    return taxSvc;
   }
 
   protected static void printMessages(ArrayOfMessage messages) {

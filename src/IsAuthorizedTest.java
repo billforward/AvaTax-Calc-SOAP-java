@@ -15,9 +15,9 @@ public class IsAuthorizedTest {
   private static final String profileName = ("AvaTaxSample");
     public static void main(String args[]) {
         try {
-            TaxSvcSoap port = getTaxSvc();
+            TaxSvcSoap taxSvc = getTaxSvc();
             IsAuthorizedResult result;
-            result = port.isAuthorized("Ping,IsAuthorized,GetTax,PostTax,CommitTax,CancelTax,ReconcileTaxHistory");
+            result = taxSvc.isAuthorized("Ping,IsAuthorized,GetTax,PostTax,CommitTax,CancelTax,ReconcileTaxHistory");
             System.out.println("IsAuthorized Operations:  " + result.getOperations().toString());
             System.out.println("Transaction ID:  " + result.getTransactionId().toString()); 
             
@@ -27,19 +27,19 @@ public class IsAuthorizedTest {
     }
   protected static TaxSvcSoap getTaxSvc() throws ServiceException, SOAPException, MalformedURLException, IOException {
     TaxSvc taxSvc;
-    TaxSvcSoap port;
+    TaxSvcSoap taxSvc;
     taxSvc = new TaxSvcLocator();
-    port = taxSvc.getTaxSvcSoap(new URL(url));
+    taxSvc = taxSvc.getTaxSvcSoap(new URL(url));
 // Set Client Profile
     Profile profile = new Profile();
     profile.setClient(profileName);
-    port.setProfile(profile);
+    taxSvc.setProfile(profile);
 // Set security
     Security security = new Security();
     security.setAccount(account);
     security.setLicense(license);
-    port.setSecurity(security);
-    return port;
+    taxSvc.setSecurity(security);
+    return taxSvc;
   }
 
   protected static void printMessages(ArrayOfMessage messages) {

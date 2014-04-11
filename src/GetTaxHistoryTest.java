@@ -18,7 +18,7 @@ public class GetTaxHistoryTest {
   public static void main(String args[]) {
 
     try {
-      TaxSvcSoap port = getTaxSvc();
+      TaxSvcSoap taxSvc = getTaxSvc();
       GetTaxHistoryRequest gtHReq = new GetTaxHistoryRequest();
 //
 // Set the tax document properties
@@ -28,7 +28,7 @@ public class GetTaxHistoryTest {
       gtHReq.setDetailLevel(DetailLevel.Tax);
 //
 // Results
-      GetTaxHistoryResult getTaxHistoryResults = port.getTaxHistory(gtHReq);
+      GetTaxHistoryResult getTaxHistoryResults = taxSvc.getTaxHistory(gtHReq);
       System.out.println("GetTaxHisotry Result: " + getTaxHistoryResults.getResultCode().toString());
       if (getTaxHistoryResults.getResultCode() == SeverityLevel.Success) {
         GetTaxRequest gtReq = getTaxHistoryResults.getGetTaxRequest();
@@ -83,19 +83,19 @@ public class GetTaxHistoryTest {
 
   protected static TaxSvcSoap getTaxSvc() throws ServiceException, SOAPException, MalformedURLException, IOException {
     TaxSvc taxSvc;
-    TaxSvcSoap port;
+    TaxSvcSoap taxSvc;
     taxSvc = new TaxSvcLocator();
-    port = taxSvc.getTaxSvcSoap(new URL(url));
+    taxSvc = taxSvc.getTaxSvcSoap(new URL(url));
 // Set Client Profile
     Profile profile = new Profile();
     profile.setClient(profileName);
-    port.setProfile(profile);
+    taxSvc.setProfile(profile);
 // Set security
     Security security = new Security();
     security.setAccount(account);
     security.setLicense(license);
-    port.setSecurity(security);
-    return port;
+    taxSvc.setSecurity(security);
+    return taxSvc;
   }
 
   protected static void printMessages(ArrayOfMessage messages) {

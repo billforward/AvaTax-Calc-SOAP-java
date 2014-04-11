@@ -17,8 +17,8 @@ public class PingTest {
 
   public static void main(String args[]) {
     try {
-      TaxSvcSoap port = getTaxSvc();
-      PingResult result = port.ping("");
+      TaxSvcSoap taxSvc = getTaxSvc();
+      PingResult result = taxSvc.ping("");
       System.out.println("Ping result: " + result.getResultCode().toString());
       System.out.println("Ping version: " + result.getVersion());
     } catch (ServiceException | SOAPException | IOException ex) {
@@ -29,19 +29,19 @@ public class PingTest {
   //Message Handling
   protected static TaxSvcSoap getTaxSvc() throws ServiceException, SOAPException, MalformedURLException, IOException {
     TaxSvc taxSvc;
-    TaxSvcSoap port;
+    TaxSvcSoap taxSvc;
     taxSvc = new TaxSvcLocator();
-    port = taxSvc.getTaxSvcSoap(new URL(url));
+    taxSvc = taxSvc.getTaxSvcSoap(new URL(url));
 // Set Client Profile
     Profile profile = new Profile();
     profile.setClient(profileName);
-    port.setProfile(profile);
+    taxSvc.setProfile(profile);
 // Set security
     Security security = new Security();
     security.setAccount(account);
     security.setLicense(license);
-    port.setSecurity(security);
-    return port;
+    taxSvc.setSecurity(security);
+    return taxSvc;
   }
 
   protected static void printMessages(ArrayOfMessage messages) {

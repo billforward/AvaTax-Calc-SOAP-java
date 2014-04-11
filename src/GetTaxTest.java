@@ -22,7 +22,7 @@ public class GetTaxTest {
 
   public static void main(String args[]) {
     try {
-      TaxSvcSoap port = getTaxSvc();
+      TaxSvcSoap taxSvc = getTaxSvc();
       GetTaxRequest getTaxRequest = new GetTaxRequest();
       Format formatter = new SimpleDateFormat("yyyy-MM-dd");
 //
@@ -164,7 +164,7 @@ public class GetTaxTest {
       getTaxRequest.setLines(lines);
 //
 //Document Level Results
-      GetTaxResult getTaxResult = port.getTax(getTaxRequest);
+      GetTaxResult getTaxResult = taxSvc.getTax(getTaxRequest);
       System.out.println("GetTax Result: " + getTaxResult.getResultCode().toString());
       if (getTaxResult.getResultCode() == SeverityLevel.Success) {
         System.out.println("DocCode: " + getTaxRequest.getDocCode());
@@ -207,19 +207,19 @@ public class GetTaxTest {
   //Message Handling
   protected static TaxSvcSoap getTaxSvc() throws ServiceException, SOAPException, MalformedURLException, IOException {
     TaxSvc taxSvc;
-    TaxSvcSoap port;
+    TaxSvcSoap taxSvc;
     taxSvc = new TaxSvcLocator();
-    port = taxSvc.getTaxSvcSoap(new URL(url));
+    taxSvc = taxSvc.getTaxSvcSoap(new URL(url));
 // Set Client Profile
     Profile profile = new Profile();
     profile.setClient(profileName);
-    port.setProfile(profile);
+    taxSvc.setProfile(profile);
 // Set security
     Security security = new Security();
     security.setAccount(account);
     security.setLicense(license);
-    port.setSecurity(security);
-    return port;
+    taxSvc.setSecurity(security);
+    return taxSvc;
   }
 
   protected static void printMessages(ArrayOfMessage messages) {

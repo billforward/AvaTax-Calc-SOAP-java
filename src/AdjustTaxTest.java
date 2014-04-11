@@ -23,7 +23,7 @@ public class AdjustTaxTest {
 
   public static void main(String args[]) {
     try {
-      TaxSvcSoap port = getTaxSvc();
+      TaxSvcSoap taxSvc = getTaxSvc();
       GetTaxRequest getTaxRequest = new GetTaxRequest();
       Format formatter = new SimpleDateFormat("yyyy-MM-dd");
 //
@@ -171,17 +171,17 @@ public class AdjustTaxTest {
 
 //
 //Document Level Results
-      AdjustTaxResult getAdjustTaxResult = port.adjustTax(adjustTaxRequest);
-      System.out.println("GetTax Result: " + getAdjustTaxResult.getResultCode().toString());
-      if (getAdjustTaxResult.getResultCode() == SeverityLevel.Success) {
+      AdjustTaxResult adjustTaxResult = taxSvc.adjustTax(adjustTaxRequest);
+      System.out.println("GetTax Result: " + adjustTaxResult.getResultCode().toString());
+      if (adjustTaxResult.getResultCode() == SeverityLevel.Success) {
         System.out.println("DocCode: " + getTaxRequest.getDocCode());
-        System.out.println("Total Amount: " + getAdjustTaxResult.getTotalAmount().toString());
-        System.out.println("Total Tax Calculated Amount: " + getAdjustTaxResult.getTotalTaxCalculated().toString());
-        System.out.println("TotalTax: " + getAdjustTaxResult.getTotalTax().toString());
-        for (int i = 0; i < getAdjustTaxResult.getTaxLines().getTaxLine().length; i++) {
+        System.out.println("Total Amount: " + adjustTaxResult.getTotalAmount().toString());
+        System.out.println("Total Tax Calculated Amount: " + adjustTaxResult.getTotalTaxCalculated().toString());
+        System.out.println("TotalTax: " + adjustTaxResult.getTotalTax().toString());
+        for (int i = 0; i < adjustTaxResult.getTaxLines().getTaxLine().length; i++) {
 //
 //Line Level Results
-          TaxLine currentTaxLine = getAdjustTaxResult.getTaxLines().getTaxLine(i);
+          TaxLine currentTaxLine = adjustTaxResult.getTaxLines().getTaxLine(i);
           System.out.println("         Line: " + currentTaxLine.getNo()
               + " Tax: " + currentTaxLine.getTax()
               + " TaxCode: " + currentTaxLine.getTaxCode());
@@ -204,7 +204,7 @@ public class AdjustTaxTest {
           System.out.print("\n");
         }
       } else {
-        printMessages(getAdjustTaxResult.getMessages());
+        printMessages(adjustTaxResult.getMessages());
       }
     } catch (ServiceException | SOAPException | IOException | ParseException ex) {
       System.out.println("Exception: " + ex.getMessage());
@@ -214,19 +214,19 @@ public class AdjustTaxTest {
   //Message Handling
   protected static TaxSvcSoap getTaxSvc() throws ServiceException, SOAPException, MalformedURLException, IOException {
     TaxSvc taxSvc;
-    TaxSvcSoap port;
+    TaxSvcSoap taxSvc;
     taxSvc = new TaxSvcLocator();
-    port = taxSvc.getTaxSvcSoap(new URL(url));
+    taxSvc = taxSvc.getTaxSvcSoap(new URL(url));
 // Set Client Profile
     Profile profile = new Profile();
     profile.setClient(profileName);
-    port.setProfile(profile);
+    taxSvc.setProfile(profile);
 // Set security
     Security security = new Security();
     security.setAccount(account);
     security.setLicense(license);
-    port.setSecurity(security);
-    return port;
+    taxSvc.setSecurity(security);
+    return taxSvc;
   }
 
   protected static void printMessages(ArrayOfMessage messages) {

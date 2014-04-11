@@ -18,7 +18,7 @@ public class ValidateTest {
   public static void main(String args[]) {
 
     try {
-      AddressSvcSoap port = getAddressSvc();
+      AddressSvcSoap taxSvc = getAddressSvc();
       ValidateRequest request = new ValidateRequest();
       Address address = new Address();
       address.setLine1("118 N Clark St");
@@ -32,7 +32,7 @@ public class ValidateTest {
       request.setCoordinates(true);
 //
       ValidateResult result;
-      result = port.validate(request);
+      result = taxSvc.validate(request);
 //
       System.out.println("Validate Result: " + result.getResultCode().toString());
       if (result.getResultCode() != SeverityLevel.Success) {
@@ -56,19 +56,19 @@ public class ValidateTest {
 
   protected static AddressSvcSoap getAddressSvc() throws ServiceException, SOAPException, MalformedURLException, IOException {
     AddressSvc addressSvc;
-    AddressSvcSoap port;
+    AddressSvcSoap taxSvc;
     addressSvc = new AddressSvcLocator();
-    port = addressSvc.getAddressSvcSoap(new URL(url));
+    taxSvc = addressSvc.getAddressSvcSoap(new URL(url));
     // Set the profile
     Profile profile = new Profile();
     profile.setClient(profileName);
-    port.setProfile(profile);
+    taxSvc.setProfile(profile);
     // Set security
     Security security = new Security();
     security.setAccount(account);
     security.setLicense(license);
-    port.setSecurity(security);
-    return port;
+    taxSvc.setSecurity(security);
+    return taxSvc;
   }
 
   protected static void printMessages(ArrayOfMessage messages) {
