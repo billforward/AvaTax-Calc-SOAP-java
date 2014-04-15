@@ -15,18 +15,28 @@ import java.text.SimpleDateFormat;
 
 public class GetTaxTest {
 
-  private static final String account = ("1234567890");
-  private static final String url = "https://development.avalara.net";
-  private static final String license = ("A1B2C3D4E5F6G7H8");
-  private static final String profileName = ("AvaTaxSample");
-
+  protected static TaxSvcSoap getTaxSvc() throws ServiceException, SOAPException, MalformedURLException, IOException {
+    TaxSvc taxSvc;
+    TaxSvcSoap soapSvc;
+    taxSvc = new TaxSvcLocator();
+    soapSvc = taxSvc.getTaxSvcSoap(new URL("https://development.avalara.net"));
+    Security security = new Security();
+    security.setAccount("1234567890");
+    security.setLicense("A1B2C3D4E5F6G7H8");
+    Profile profile = new Profile();
+    profile.setClient("AvaTaxSample");
+    soapSvc.setProfile(profile);
+    soapSvc.setSecurity(security);
+    return soapSvc;
+  }
   public static void main(String args[]) {
+
     try {
       TaxSvcSoap taxSvc = getTaxSvc();
       GetTaxRequest getTaxRequest = new GetTaxRequest();
       Format formatter = new SimpleDateFormat("yyyy-MM-dd");
 //
-//Document Level Elements Required
+/*Document Level Elements Required*/
       getTaxRequest.setCompanyCode("APITrialCompany");
       getTaxRequest.setDocType(DocumentType.SalesOrder);
       getTaxRequest.setDocCode("INV001");
@@ -36,9 +46,9 @@ public class GetTaxTest {
       getTaxRequest.setDetailLevel(DetailLevel.Tax);
       getTaxRequest.setOriginCode("01");
       getTaxRequest.setDestinationCode("02");
-////
-////*Situational Request Document Parameters
-////
+//
+/*Situational Request Document Parameters*/
+//
 //    getTaxRequest.setSalespersonCode("Bill Sales");
 //    getTaxRequest.setCustomerUsageType("G");
 //    getTaxRequest.setDiscount(new BigDecimal(50.00));
@@ -46,7 +56,7 @@ public class GetTaxTest {
 //    getTaxRequest.setExemptionNo("12345");
 //    getTaxRequest.setReferenceCode("ref123456");
 //    getTaxRequest.setLocationCode("01");
-//    getTaxRequest.setCommit(false);
+//    getTaxRequest.setCommit(true);
 //    getTaxRequest.setCurrencyCode("USD");
 //    getTaxRequest.setServiceMode(ServiceMode.Automatic);
 //    getTaxRequest.setExchangeRate(new BigDecimal(9.00));
@@ -55,10 +65,10 @@ public class GetTaxTest {
 //    getTaxRequest.setPosLaneCode("09");
 //    getTaxRequest.setBusinessIdentificationNo("234243");
 //
-////*TaxOverride at the Document Level
-////*     Note: TaxOverride can exist at the 
-////*     Document Level OR Line Level
-////*     Never both at the same time.
+/* TaxOverride at the Document Level
+     Note: TaxOverride can exist at the 
+     Document Level OR Line Level
+     Never both at the same time.*/
 //    
 //    TaxOverride taxOverride = new TaxOverride();
 //    taxOverride.setReason("Adjustment for return");
@@ -67,10 +77,11 @@ public class GetTaxTest {
 //    Date taxOverrideDate = (Date) formatter.parseObject("2013-07-01");
 //    taxOverride.setTaxDate(taxOverrideDate);
 //    getTaxRequest.setTaxOverride(taxOverride);
-////*END TaxOverride at the Document Level
-// Address Data
+/*END TaxOverride at the Document Level*/
+//
+/*Address Data*/
       ArrayOfBaseAddress addresses = new ArrayOfBaseAddress(3);
-//Address 01
+/*Address 01*/
       BaseAddress origin = new BaseAddress();
       origin.setAddressCode("01");
       origin.setLine1("45 Fremont Street");
@@ -81,7 +92,7 @@ public class GetTaxTest {
       origin.setPostalCode("94105");
       origin.setCountry("US");
       addresses.add(origin);
-//Address 02
+/*Address 02*/
       BaseAddress destination = new BaseAddress();
       destination.setAddressCode("02");
       destination.setLine3("ATTN Accounts Payable");
@@ -92,7 +103,7 @@ public class GetTaxTest {
       destination.setPostalCode("60602");
       destination.setCountry("US");
       addresses.add(destination);
-//Address 03
+/*Address 03*/
       BaseAddress third = new BaseAddress();
       third.setAddressCode("03");
       third.setLatitude("47.627935");
@@ -100,11 +111,11 @@ public class GetTaxTest {
       addresses.add(third);
       getTaxRequest.setAddresses(addresses);
 //
-// Add invoice lines
+/*Add invoice lines*/
 //
       ArrayOfLine lines = new ArrayOfLine(3);
       Line line;
-//Line 01    
+/*Line 01*/    
       line = new Line();
       line.setNo("01");
       line.setItemCode("N543");
@@ -114,7 +125,7 @@ public class GetTaxTest {
       line.setAmount(new BigDecimal(10.00));
       line.setTaxCode("NT");
 //
-//*Situational Request Document Parameters
+/*Situational Request Document Parameters*/
 //      line.setCustomerUsageType("L");
 //      line.setExemptionNo("12345");
 //      line.setDiscounted(true);
@@ -122,23 +133,22 @@ public class GetTaxTest {
 //      line.setRef1("123");
 //      line.setRef2("456");
 //
-//*TaxOverride at the LINE Level
-//*       Note: TaxOverride can exist at the 
-//*     Document Level OR Line Level
-//*     Never both at the same time.
+/*TaxOverride at the Document Level*/
+/*     Note: TaxOverride can exist at the */
+/*     Document Level OR Line Level*/
+/*     Never both at the same time.*/
 //    
 //    TaxOverride taxOverride = new TaxOverride();
 //    taxOverride.setReason("Adjustment for return");
 //    taxOverride.setTaxOverrideType(TaxOverrideType.TaxDate);
-//    //TaxOverrided Date
+//    taxOverride.setTaxAmount(new BigDecimal(0.00));
 //    Date taxOverrideDate = (Date) formatter.parseObject("2013-07-01");
 //    taxOverride.setTaxDate(taxOverrideDate);
-//    //END TaxOverrided Date
-//    taxOverride.setTaxAmount(new BigDecimal(0.00));
 //    getTaxRequest.setTaxOverride(taxOverride);
+/*END TaxOverride at the Document Level*/
 //
       lines.add(line);
-//Line 02
+/*Line 02*/
       line = new Line();
       line.setNo("02");
       line.setOriginCode("01");
@@ -149,7 +159,7 @@ public class GetTaxTest {
       line.setAmount(new BigDecimal(150.00));
       line.setTaxCode("PC030147");
       lines.add(line);
-//Line 03
+/*Line 03*/
       line = new Line();
       line.setOriginCode("01");
       line.setDestinationCode("03");
@@ -163,7 +173,7 @@ public class GetTaxTest {
 //
       getTaxRequest.setLines(lines);
 //
-//Document Level Results
+/*Document Level Results*/
       GetTaxResult getTaxResult = taxSvc.getTax(getTaxRequest);
       System.out.println("GetTax Result: " + getTaxResult.getResultCode().toString());
       if (getTaxResult.getResultCode() == SeverityLevel.Success) {
@@ -173,26 +183,24 @@ public class GetTaxTest {
         System.out.println("TotalTax: " + getTaxResult.getTotalTax().toString());
         for (int i = 0; i < getTaxResult.getTaxLines().getTaxLine().length; i++) {
 //
-//Line Level Results
+/*Line Level Results*/
           TaxLine currentTaxLine = getTaxResult.getTaxLines().getTaxLine(i);
           System.out.println("         Line: " + currentTaxLine.getNo()
               + " Tax: " + currentTaxLine.getTax()
               + " TaxCode: " + currentTaxLine.getTaxCode());
 //
-//Line Level Detail Results
+/*Line Level Detail Results*/
           for (int j = 0; j < currentTaxLine.getTaxDetails().getTaxDetail().length; j++) {
             TaxDetail currentTaxDetail = currentTaxLine.getTaxDetails().getTaxDetail(j);
 
-            System.out.println("          Juris Type: " + currentTaxDetail.getJurisType()
-                + " | Juris Name: " + currentTaxDetail.getJurisName()
-                + " | Juris Code: " + currentTaxDetail.getJurisCode()
-                + " | Rate Type: " + currentTaxDetail.getRateType()
+            System.out.println("          JurisType: " + currentTaxDetail.getJurisType()
                 + " | Region: " + currentTaxDetail.getRegion()
-                + " | State Assigned #: " + currentTaxDetail.getStateAssignedNo()
-                + " | Tax Group: " + currentTaxDetail.getTaxGroup()
-                + " | TaxName: " + currentTaxDetail.getTaxName()
-                + " | Line Rate: " + currentTaxDetail.getRate()
-                + " | Line Amount: " + currentTaxDetail.getTax());
+                + " | Rate: " + currentTaxDetail.getRate()
+                + " | Taxable: " + currentTaxDetail.getTaxable()
+                + " | Amount: " + currentTaxDetail.getTax()
+                + " | JuriName: " + currentTaxDetail.getJurisName()
+                + " | JurisCode: " + currentTaxDetail.getJurisCode()
+                + " | TaxName: " + currentTaxDetail.getTaxName());
           }
           System.out.print("\n");
         }
@@ -203,25 +211,7 @@ public class GetTaxTest {
       System.out.println("Exception: " + ex.getMessage());
     }
   }
-
-  //Message Handling
-  protected static TaxSvcSoap getTaxSvc() throws ServiceException, SOAPException, MalformedURLException, IOException {
-    TaxSvc taxSvc;
-    TaxSvcSoap taxSvc;
-    taxSvc = new TaxSvcLocator();
-    taxSvc = taxSvc.getTaxSvcSoap(new URL(url));
-// Set Client Profile
-    Profile profile = new Profile();
-    profile.setClient(profileName);
-    taxSvc.setProfile(profile);
-// Set security
-    Security security = new Security();
-    security.setAccount(account);
-    security.setLicense(license);
-    taxSvc.setSecurity(security);
-    return taxSvc;
-  }
-
+/*Message Handling*/
   protected static void printMessages(ArrayOfMessage messages) {
     for (int ii = 0; ii < messages.size(); ii++) {
       Message message = messages.getMessage(ii);

@@ -10,20 +10,30 @@ import java.io.IOException;
 
 public class CommitTaxTest {
 
-  private static final String account = ("1234567890");
-  private static final String url = "https://development.avalara.net";
-  private static final String license = ("A1B2C3D4E5F6G7H8");
-  private static final String profileName = ("AvaTaxSample");
+    protected static TaxSvcSoap getTaxSvc() throws ServiceException, SOAPException, MalformedURLException, IOException {
+    TaxSvc taxSvc;
+    TaxSvcSoap soapSvc;
+    taxSvc = new TaxSvcLocator();
+    soapSvc = taxSvc.getTaxSvcSoap(new URL("https://development.avalara.net"));
+    Security security = new Security();
+    security.setAccount("1234567890");
+    security.setLicense("A1B2C3D4E5F6G7H8");
+    Profile profile = new Profile();
+    profile.setClient("AvaTaxSample");
+    soapSvc.setProfile(profile);
+    soapSvc.setSecurity(security);
+    return soapSvc;
+  }
 
   public static void main(String args[]) {
     try {
       TaxSvcSoap taxSvc = getTaxSvc();
       CommitTaxRequest commitTaxRequest = new CommitTaxRequest();
-//Required Request Parameters
-      commitTaxRequest.setDocCode("INV001");
+/*Required Request Parameters*/
+      commitTaxRequest.setDocCode("2014-04-15");
       commitTaxRequest.setDocType(DocumentType.SalesInvoice);
-      commitTaxRequest.setCompanyCode("APITrialCompany");
-//Optioinal
+      commitTaxRequest.setCompanyCode("");
+/*Optional*/
 //      commitTaxRequest.setNewDocCode("INV001-1");
 //
       CommitTaxResult commitTaxResult = taxSvc.commitTax(commitTaxRequest);
@@ -37,30 +47,12 @@ public class CommitTaxTest {
       System.out.println("Exception: " + ex.getMessage());
     }
   }
-//Message Handling
-
-  protected static TaxSvcSoap getTaxSvc() throws ServiceException, SOAPException, MalformedURLException, IOException {
-    TaxSvc taxSvc;
-    TaxSvcSoap taxSvc;
-    taxSvc = new TaxSvcLocator();
-    taxSvc = taxSvc.getTaxSvcSoap(new URL(url));
-// Set Client Profile
-    Profile profile = new Profile();
-    profile.setClient(profileName);
-    taxSvc.setProfile(profile);
-// Set security
-    Security security = new Security();
-    security.setAccount(account);
-    security.setLicense(license);
-    taxSvc.setSecurity(security);
-    return taxSvc;
-  }
-
+/*Message Handling*/
   protected static void printMessages(ArrayOfMessage messages) {
     for (int ii = 0; ii < messages.size(); ii++) {
       Message message = messages.getMessage(ii);
       System.out.println(message.getSeverity().toString() + " " + ii + ": " + message.getSummary());
+    
     }
-
   }
 }

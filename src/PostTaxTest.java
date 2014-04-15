@@ -12,24 +12,32 @@ import java.math.BigDecimal;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class PostTaxTest {
+  
+  protected static TaxSvcSoap getTaxSvc() throws ServiceException, SOAPException, MalformedURLException, IOException {
+    TaxSvc taxSvc;
+    TaxSvcSoap soapSvc;
+    taxSvc = new TaxSvcLocator();
+    soapSvc = taxSvc.getTaxSvcSoap(new URL("https://development.avalara.net"));
+    Security security = new Security();
+    security.setAccount("1234567890");
+    security.setLicense("A1B2C3D4E5F6G7H8");
+    Profile profile = new Profile();
+    profile.setClient("AvaTaxSample");
+    soapSvc.setProfile(profile);
+    soapSvc.setSecurity(security);
+    return soapSvc;
+  }
+  public static void main(String args[]) throws ParseException {
 
-  private static final String account = ("1234567890");
-  private static final String url = "https://development.avalara.net";
-  private static final String license = ("A1B2C3D4E5F6G7H8");
-  private static final String profileName = ("AvaTaxSample");
-
-  public static void main(String args[]) {
     try {
       TaxSvcSoap taxSvc = getTaxSvc();
       PostTaxRequest postTaxRequest = new PostTaxRequest();
       Format formatter = new SimpleDateFormat("yyyy-MM-dd");
-//Required Request Parameters
+/*Required Request Parameters*/
       postTaxRequest.setDocCode("INV001");
-      postTaxRequest.setCompanyCode("APITrialCompany");
+      postTaxRequest.setCompanyCode("");
       postTaxRequest.setDocType(DocumentType.SalesInvoice);
       Date docDate = (Date) formatter.parseObject("2014-01-01");
       postTaxRequest.setDocDate(docDate);
@@ -44,34 +52,13 @@ public class PostTaxTest {
       }
     } catch (ServiceException | SOAPException | IOException ex) {
       System.out.println("Exception: " + ex.getMessage());
-    } catch (ParseException ex) {
-      Logger.getLogger(PostTaxTest.class.getName()).log(Level.SEVERE, null, ex);
-    }
-  }
-
-//Message Handling
-  protected static TaxSvcSoap getTaxSvc() throws ServiceException, SOAPException, MalformedURLException, IOException {
-    TaxSvc taxSvc;
-    TaxSvcSoap taxSvc;
-    taxSvc = new TaxSvcLocator();
-    taxSvc = taxSvc.getTaxSvcSoap(new URL(url));
-// Set Client Profile
-    Profile profile = new Profile();
-    profile.setClient(profileName);
-    taxSvc.setProfile(profile);
-// Set security
-    Security security = new Security();
-    security.setAccount(account);
-    security.setLicense(license);
-    taxSvc.setSecurity(security);
-    return taxSvc;
-  }
-
+}
+}
+/*Message Handling*/
   protected static void printMessages(ArrayOfMessage messages) {
     for (int ii = 0; ii < messages.size(); ii++) {
       Message message = messages.getMessage(ii);
       System.out.println(message.getSeverity().toString() + " " + ii + ": " + message.getSummary());
     }
-
   }
-}
+} 

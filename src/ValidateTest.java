@@ -10,10 +10,20 @@ import java.io.IOException;
 
 public class ValidateTest {
 
-  private static final String account = ("1234567890");
-  private static final String url = "https://development.avalara.net";
-  private static final String license = ("A1B2C3D4E5F6G7H8");
-  private static final String profileName = ("AvaTaxSample");
+    protected static AddressSvcSoap getAddressSvc() throws ServiceException, SOAPException, MalformedURLException, IOException {
+    AddressSvc addressSvc;
+    AddressSvcSoap taxSvc;
+    addressSvc = new AddressSvcLocator();
+    taxSvc = addressSvc.getAddressSvcSoap(new URL("https://development.avalara.net"));
+    Profile profile = new Profile();
+    profile.setClient("AvaTaxSample");
+    taxSvc.setProfile(profile);
+    Security security = new Security();
+    security.setAccount("1234567890");
+    security.setLicense("A1B2C3D4E5F6G7H8");
+    taxSvc.setSecurity(security);
+    return taxSvc;
+  }
 
   public static void main(String args[]) {
 
@@ -53,24 +63,7 @@ public class ValidateTest {
       System.out.println("Exception: " + ex.getMessage());
     }
   }
-
-  protected static AddressSvcSoap getAddressSvc() throws ServiceException, SOAPException, MalformedURLException, IOException {
-    AddressSvc addressSvc;
-    AddressSvcSoap taxSvc;
-    addressSvc = new AddressSvcLocator();
-    taxSvc = addressSvc.getAddressSvcSoap(new URL(url));
-    // Set the profile
-    Profile profile = new Profile();
-    profile.setClient(profileName);
-    taxSvc.setProfile(profile);
-    // Set security
-    Security security = new Security();
-    security.setAccount(account);
-    security.setLicense(license);
-    taxSvc.setSecurity(security);
-    return taxSvc;
-  }
-
+/*Message Handling*/
   protected static void printMessages(ArrayOfMessage messages) {
     for (int ii = 0; ii < messages.size(); ii++) {
       Message message = messages.getMessage(ii);
