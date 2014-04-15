@@ -1,12 +1,7 @@
 <body bgcolor="#FFFFFF">
-<p>The <strong>AvaTaxCalc JAVA (for SOAP) Sample</strong> is open source designed to assist you with developing your own <em>custom</em> integration to your chosen web store or e-commerce solution. The adapter was built using Apache Axis WSDL2Java to build the stubs which were then enhanced to support a
-  custom Profile SOAP header element and a WS-Security UsernameToken SOAP header element.  It uses WSS4J to<br />
-  build the security token.</p>
+<p>The <strong>AvaTaxCalc JAVA (for SOAP) Sample</strong> is open source designed to assist you with developing your own <em>custom</em> integration to your chosen web store or e-commerce solution. The adapter was built using Apache Axis WSDL2Java to build the stubs which were then enhanced to support a custom Profile SOAP header element and a WS-Security UsernameToken SOAP header element.  It uses WSS4J to build the security token.</p>
 <p>Each sample included can be executed independently from a command prompt provided they have been pre-configured with the Web service <strong>URL</strong> and your <strong>Account</strong> Number and <strong>License</strong> Key.</p>
-<p> <em>private static final String</em> <strong>account</strong> = (&quot;<strong>1234567890</strong>&quot;);<br />
-  <em>private static final String</em> <strong>url</strong> = &quot;<a href="https://development.avalara.net">https://development.avalara.net</a>&quot;;<br />
-  <em>private static final String </em><strong>license</strong> = (&quot;<strong>A1B2C3D4E5F6G7H8</strong>&quot;);<br />
-  <em>private static final String</em> <strong>profileName</strong> = (&quot;<strong>AvaTaxSample</strong>&quot;);</p>
+
 <em><strong>Note: </strong></em>The Avalara Admin Account <strong><em>Username</em></strong> and <strong><em>Password</em></strong> can be used in place of <strong><em>Account</em></strong> and <em><strong>License</strong> Key</em>
 <p>See <a href="http://developer.avalara.com/api-docs/designing-your-integration/gettax">http://developer.avalara.com/api-docs/designing-your-integration/gettax</a> for more information. </p>
 <h4><strong>Installation Dependencies</strong></h4>
@@ -75,16 +70,16 @@
     <td>ReconcileTaxHistory is a method that  will produce a listing of documents saved to the AvaTax database -based on a range of dates or document codes.</td>
   </tr>
   <tr-->
-    <td>/lib</td>
-    <td>Contains the required jar files</td>
+    <td><strong>/lib</strong></td>
+    <td>Contains the required jar files</strong></td>
   </tr>
   <tr>
-    <td>/doc</td>
+    <td><strong>/doc</td>
     <td>Contains documentation for the sorce code located in <strong>/src </strong>-- Navigate to ..<a href="\doc\api\index.html">\doc\api\index.html</a> to veiw documentation.</td>
   </tr>
   <tr>
     <td><strong>/src</strong></td>
-    <td>Contains the core classes that enable the API samples to make AvaTax web service calls.</td>
+    <td>Contains API Sample Code described above and source code.</td>
   </tr>
   <tr>
     <td colspan="2"><h4><strong>Other Files Included in this Repository</strong></h4></td>
