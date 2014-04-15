@@ -30,7 +30,7 @@ public class CommitTaxTest {
       TaxSvcSoap taxSvc = getTaxSvc();
       CommitTaxRequest commitTaxRequest = new CommitTaxRequest();
 /*Required Request Parameters*/
-      commitTaxRequest.setDocCode("2014-04-15");
+      commitTaxRequest.setDocCode("INV001");
       commitTaxRequest.setDocType(DocumentType.SalesInvoice);
       commitTaxRequest.setCompanyCode("");
 /*Optional*/

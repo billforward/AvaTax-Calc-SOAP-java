@@ -32,6 +32,11 @@ public class AdjustTaxTest {
 
   public static void main(String args[]) {
     try {
+/*AdjustTax Parameters*/
+      AdjustTaxRequest adjustTaxRequest = new AdjustTaxRequest();
+      adjustTaxRequest.setAdjustmentDescription("Transaction Adjusted for Testing");
+      adjustTaxRequest.setAdjustmentReason(4);
+/*GetTaxRequest Replica of Existing Document*/ 
       TaxSvcSoap taxSvc = getTaxSvc();
       GetTaxRequest getTaxRequest = new GetTaxRequest();
       Format formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -167,14 +172,10 @@ public class AdjustTaxTest {
       line.setAmount(new BigDecimal(15.00));
       line.setTaxCode("FR");
       lines.add(line);
-//
+/*Set GetTaxRequest*/
       getTaxRequest.setLines(lines);
-/*Set AdjustTax*/
-      AdjustTaxRequest adjustTaxRequest = new AdjustTaxRequest();
-      adjustTaxRequest.setAdjustmentDescription("Transaction Adjusted for Testing");
-      adjustTaxRequest.setAdjustmentReason(4);
+/*Set AdjustTaxRequest*/
       adjustTaxRequest.setGetTaxRequest(getTaxRequest);
-
 //
 /*Document Level Results*/
       AdjustTaxResult adjustTaxResult = taxSvc.adjustTax(adjustTaxRequest);

@@ -15,13 +15,13 @@ public class ValidateTest {
     AddressSvcSoap taxSvc;
     addressSvc = new AddressSvcLocator();
     taxSvc = addressSvc.getAddressSvcSoap(new URL("https://development.avalara.net"));
-    Profile profile = new Profile();
-    profile.setClient("AvaTaxSample");
-    taxSvc.setProfile(profile);
     Security security = new Security();
     security.setAccount("1234567890");
     security.setLicense("A1B2C3D4E5F6G7H8");
     taxSvc.setSecurity(security);
+	Profile profile = new Profile();
+    profile.setClient("AvaTaxSample");
+    taxSvc.setProfile(profile);
     return taxSvc;
   }
 
