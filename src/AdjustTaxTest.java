@@ -2,117 +2,114 @@
 import com.avalara.avatax.services.tax.*;
 import com.avalara.avatax.services.base.Profile;
 import com.avalara.avatax.services.base.Security;
+import java.io.IOException;
 import javax.xml.rpc.ServiceException;
 import javax.xml.soap.SOAPException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
 import java.math.BigDecimal;
-import java.io.IOException;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class AdjustTaxTest {
 
-  protected static TaxSvcSoap getTaxSvc() throws ServiceException, SOAPException, MalformedURLException, IOException {
-    TaxSvc taxSvc;
-    TaxSvcSoap soapSvc;
-    taxSvc = new TaxSvcLocator();
-    soapSvc = taxSvc.getTaxSvcSoap(new URL("https://development.avalara.net"));
-    Security security = new Security();
-    security.setAccount("1234567890");
-    security.setLicense("A1B2C3D4E5F6G7H8");
-    Profile profile = new Profile();
-    profile.setClient("AvaTaxSample");
-    soapSvc.setProfile(profile);
-    soapSvc.setSecurity(security);
-    return soapSvc;
-  }
+  public static void main(String args[]) throws ParseException {
 
-  public static void main(String args[]) {
     try {
+      TaxSvcLocator taxSvc = new TaxSvcLocator();
+      String url = "https://development.avalara.net";
+      TaxSvcSoap soapSvc = taxSvc.getTaxSvcSoap(new URL(url));
+      Profile profile = new Profile();
+      profile.setClient("AvaTaxSample");
+      soapSvc.setProfile(profile);
+      Security security = new Security();
+      security.setAccount("1234567890");
+      security.setLicense("A1B2C3D4E5F6G7H8");
+      soapSvc.setSecurity(security);
+//
 /*AdjustTax Parameters*/
       AdjustTaxRequest adjustTaxRequest = new AdjustTaxRequest();
       adjustTaxRequest.setAdjustmentDescription("Transaction Adjusted for Testing");
       adjustTaxRequest.setAdjustmentReason(4);
-/*GetTaxRequest Replica of Existing Document*/ 
-      TaxSvcSoap taxSvc = getTaxSvc();
-      GetTaxRequest getTaxRequest = new GetTaxRequest();
+      /*Inserted GetTaxRequest Replica of Existing Document*/
+      GetTaxRequest request = new GetTaxRequest();
       Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+//
 /*Document Level Elements Required*/
-      getTaxRequest.setCompanyCode("APITrialCompany");
-      getTaxRequest.setDocType(DocumentType.SalesInvoice);
-      getTaxRequest.setDocCode("INV001");
+      request.setCompanyCode("APITrialCompany");
+      request.setDocType(DocumentType.SalesInvoice);
+      request.setDocCode("INV001");
       Date docDate = (Date) formatter.parseObject("2014-01-01");
-      getTaxRequest.setDocDate(docDate);
-      getTaxRequest.setCustomerCode("ABC4335");
-      getTaxRequest.setDetailLevel(DetailLevel.Tax);
-      getTaxRequest.setOriginCode("01");
-      getTaxRequest.setDestinationCode("02");
+      request.setDocDate(docDate);
+      request.setCustomerCode("ABC4335");
+      request.setDetailLevel(DetailLevel.Tax);
+      request.setOriginCode("01");
+      request.setDestinationCode("02");
 //
 /*Situational Request Document Parameters*/
-//
-//    getTaxRequest.setSalespersonCode("Bill Sales");
-//    getTaxRequest.setCustomerUsageType("G");
-//    getTaxRequest.setDiscount(new BigDecimal(50.00));
-//    getTaxRequest.setPurchaseOrderNo("PO123456");
-//    getTaxRequest.setExemptionNo("12345");
-//    getTaxRequest.setReferenceCode("ref123456");
-//    getTaxRequest.setLocationCode("01");
-//    getTaxRequest.setCommit(false);
-//    getTaxRequest.setCurrencyCode("USD");
-//    getTaxRequest.setServiceMode(ServiceMode.Automatic);
-//    getTaxRequest.setExchangeRate(new BigDecimal(9.00));
+//    request.setSalespersonCode("Bill Sales");
+//    request.setCustomerUsageType("G");
+//    request.setDiscount(new BigDecimal(50.00));
+//    request.setPurchaseOrderNo("PO123456");
+//    request.setExemptionNo("12345");
+//    request.setReferenceCode("ref123456");
+//    request.setLocationCode("01");
+//    request.setCommit(true);
+//    request.setCurrencyCode("USD");
+//    request.setServiceMode(ServiceMode.Automatic);
+//    request.setExchangeRate(new BigDecimal(9.00));
 //    Date ExchangeRateEffDate = (Date) formatter.parseObject("2013-01-01");
-//    getTaxRequest.setExchangeRateEffDate(ExchangeRateEffDate);
-//    getTaxRequest.setPosLaneCode("09");
-//    getTaxRequest.setBusinessIdentificationNo("234243");
-/*TaxOverride at the Document Level
-  Note: TaxOverride can exist at the Document Level OR 
-        Line Level but never both at the same time.
-*/ 
+//    request.setExchangeRateEffDate(ExchangeRateEffDate);
+//    request.setPosLaneCode("09");
+//    request.setBusinessIdentificationNo("234243");
+//
+/* TaxOverride at the Document Level
+       Note: TaxOverride can exist at the 
+       Document Level OR Line Level
+       Never both at the same time.*/
+//    
 //    TaxOverride taxOverride = new TaxOverride();
 //    taxOverride.setReason("Adjustment for return");
 //    taxOverride.setTaxOverrideType(TaxOverrideType.TaxDate);
 //    taxOverride.setTaxAmount(new BigDecimal(0.00));
 //    Date taxOverrideDate = (Date) formatter.parseObject("2013-07-01");
 //    taxOverride.setTaxDate(taxOverrideDate);
-//    getTaxRequest.setTaxOverride(taxOverride);
+//    request.setTaxOverride(taxOverride);
+/*END TaxOverride at the Document Level*/
 //
-/*END TaxOverride at the Document Level
-*/
-/* Address Data*/
+/*Address Data*/
       ArrayOfBaseAddress addresses = new ArrayOfBaseAddress(3);
 /*Address 01*/
-      BaseAddress origin = new BaseAddress();
-      origin.setAddressCode("01");
-      origin.setLine1("45 Fremont Street");
-      origin.setLine2("");
-      origin.setLine3("");
-      origin.setCity("San Francisco");
-      origin.setRegion("CA");
-      origin.setPostalCode("94105");
-      origin.setCountry("US");
-      addresses.add(origin);
+      BaseAddress address1 = new BaseAddress();
+      address1.setAddressCode("01");
+      address1.setLine1("45 Fremont Street");
+      address1.setLine2("");
+      address1.setLine3("");
+      address1.setCity("San Francisco");
+      address1.setRegion("CA");
+      address1.setPostalCode("94105");
+      address1.setCountry("US");
+      addresses.add(address1);
 /*Address 02*/
-      BaseAddress destination = new BaseAddress();
-      destination.setAddressCode("02");
-      destination.setLine3("ATTN Accounts Payable");
-      destination.setLine1("118 N Clark St");
-      destination.setLine2("Suite 100");
-      destination.setCity("Chicago");
-      destination.setRegion("IL");
-      destination.setPostalCode("60602");
-      destination.setCountry("US");
-      addresses.add(destination);
+      BaseAddress address2 = new BaseAddress();
+      address2.setAddressCode("02");
+      address2.setLine3("ATTN Accounts Payable");
+      address2.setLine1("118 N Clark St");
+      address2.setLine2("Suite 100");
+      address2.setCity("Chicago");
+      address2.setRegion("IL");
+      address2.setPostalCode("60602");
+      address2.setCountry("US");
+      addresses.add(address2);
 /*Address 03*/
-      BaseAddress third = new BaseAddress();
-      third.setAddressCode("03");
-      third.setLatitude("47.627935");
-      third.setLongitude("-122.51702");
-      addresses.add(third);
-      getTaxRequest.setAddresses(addresses);
+      BaseAddress address3 = new BaseAddress();
+      address3.setAddressCode("03");
+      address3.setLatitude("47.627935");
+      address3.setLongitude("-122.51702");
+      addresses.add(address3);
+/*Add addresses to addresses array*/
+      request.setAddresses(addresses);
 //
 /*Add invoice lines*/
 //
@@ -135,20 +132,21 @@ public class AdjustTaxTest {
 //      line.setTaxIncluded(true);
 //      line.setRef1("123");
 //      line.setRef2("456");
-/*TaxOverride at the Document Level
-  Note: TaxOverride can exist at the Document Level OR 
-        Line Level but never both at the same time.
-*/ 
+//
+/*TaxOverride at the Document Level*/
+      /*     Note: TaxOverride can exist at the */
+      /*     Document Level OR Line Level*/
+      /*     Never both at the same time.*/
+//    
 //    TaxOverride taxOverride = new TaxOverride();
 //    taxOverride.setReason("Adjustment for return");
 //    taxOverride.setTaxOverrideType(TaxOverrideType.TaxDate);
 //    taxOverride.setTaxAmount(new BigDecimal(0.00));
 //    Date taxOverrideDate = (Date) formatter.parseObject("2013-07-01");
 //    taxOverride.setTaxDate(taxOverrideDate);
-//    getTaxRequest.setTaxOverride(taxOverride);
+//    request.setTaxOverride(taxOverride);
+/*END TaxOverride at the Document Level*/
 //
-/*END TaxOverride at the Document Level
-*/
       lines.add(line);
 /*Line 02*/
       line = new Line();
@@ -172,16 +170,17 @@ public class AdjustTaxTest {
       line.setAmount(new BigDecimal(15.00));
       line.setTaxCode("FR");
       lines.add(line);
-/*Set GetTaxRequest*/
-      getTaxRequest.setLines(lines);
+//
+      request.setLines(lines);
+//  
 /*Set AdjustTaxRequest*/
-      adjustTaxRequest.setGetTaxRequest(getTaxRequest);
+      adjustTaxRequest.setGetTaxRequest(request);
 //
 /*Document Level Results*/
-      AdjustTaxResult adjustTaxResult = taxSvc.adjustTax(adjustTaxRequest);
+      AdjustTaxResult adjustTaxResult = soapSvc.adjustTax(adjustTaxRequest);
       System.out.println("GetTax Result: " + adjustTaxResult.getResultCode().toString());
       if (adjustTaxResult.getResultCode() == SeverityLevel.Success) {
-        System.out.println("DocCode: " + getTaxRequest.getDocCode());
+        System.out.println("DocCode: " + request.getDocCode());
         System.out.println("Total Amount: " + adjustTaxResult.getTotalAmount().toString());
         System.out.println("Total Tax Calculated Amount: " + adjustTaxResult.getTotalTaxCalculated().toString());
         System.out.println("TotalTax: " + adjustTaxResult.getTotalTax().toString());
@@ -209,18 +208,14 @@ public class AdjustTaxTest {
           System.out.print("\n");
         }
       } else {
-        printMessages(adjustTaxResult.getMessages());
+        ArrayOfMessage messages = adjustTaxResult.getMessages();
+        for (int ii = 0; ii < messages.size(); ii++) {
+          Message message = messages.getMessage(ii);
+          System.out.println(message.getSeverity().toString() + " " + ii + ": " + message.getSummary());
+        }
       }
     } catch (ServiceException | SOAPException | IOException | ParseException ex) {
       System.out.println("Exception: " + ex.getMessage());
     }
-  }
-/*Message Handling*/
-  protected static void printMessages(ArrayOfMessage messages) {
-    for (int ii = 0; ii < messages.size(); ii++) {
-      Message message = messages.getMessage(ii);
-      System.out.println(message.getSeverity().toString() + " " + ii + ": " + message.getSummary());
-    }
-
   }
 }

@@ -4,48 +4,45 @@ import com.avalara.avatax.services.base.Profile;
 import com.avalara.avatax.services.base.Security;
 import javax.xml.rpc.ServiceException;
 import javax.xml.soap.SOAPException;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.io.IOException;
+import java.net.MalformedURLException;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GetTaxHistoryTest {
 
-  protected static TaxSvcSoap getTaxSvc() throws ServiceException, SOAPException, MalformedURLException, IOException {
-    TaxSvc taxSvc;
-    TaxSvcSoap soapSvc;
-    taxSvc = new TaxSvcLocator();
-    soapSvc = taxSvc.getTaxSvcSoap(new URL("https://development.avalara.net"));
-    Security security = new Security();
-    security.setAccount("1234567890");
-    security.setLicense("A1B2C3D4E5F6G7H8");
-    Profile profile = new Profile();
-    profile.setClient("AvaTaxSample");
-    soapSvc.setProfile(profile);
-    soapSvc.setSecurity(security);
-    return soapSvc;
-  }
-  public static void main(String args[]) {
-
+  public static void main(String args[]) throws MalformedURLException, SOAPException, RemoteException {
     try {
-      TaxSvcSoap taxSvc = getTaxSvc();
-      GetTaxHistoryRequest getTaxHistoryRequest = new GetTaxHistoryRequest();
-//
-/*Set the tax document properties*/
-      getTaxHistoryRequest.setDocCode("INV001");
-      getTaxHistoryRequest.setCompanyCode("APITrialCompany");
-      getTaxHistoryRequest.setDocType(DocumentType.SalesInvoice);
-      getTaxHistoryRequest.setDetailLevel(DetailLevel.Tax);
-//
-/*Results*/
-      GetTaxHistoryResult getTaxHistoryResults = taxSvc.getTaxHistory(getTaxHistoryRequest);
-      System.out.println("GetTaxHisotry Result: " + getTaxHistoryResults.getResultCode().toString());
-      if (getTaxHistoryResults.getResultCode() == SeverityLevel.Success) {
-        GetTaxRequest gtReq = getTaxHistoryResults.getGetTaxRequest();
-        GetTaxResult getTaxResults = getTaxHistoryResults.getGetTaxResult();
-        ArrayOfBaseAddress addr_list = gtReq.getAddresses();
-        BaseAddress origin = addr_list.getBaseAddress(gtReq.getOriginCode());
-        BaseAddress dest = addr_list.getBaseAddress(gtReq.getDestinationCode());
-        System.out.println("Current Invoice Status For Invoice Number " + getTaxResults.getDocCode() + ": " + getTaxResults.getDocStatus().toString());
+      TaxSvcLocator taxSvc = new TaxSvcLocator();
+      String url = "https://development.avalara.net";
+      TaxSvcSoap soapSvc = taxSvc.getTaxSvcSoap(new URL(url));
+      Profile profile = new Profile();
+      profile.setClient("AvaTaxSample");
+      soapSvc.setProfile(profile);
+      Security security = new Security();
+      security.setAccount("1234567890");
+      security.setLicense("A1B2C3D4E5F6G7H8");
+      soapSvc.setSecurity(security);
+//     
+      GetTaxHistoryRequest request = new GetTaxHistoryRequest();
+/*Document Level Elements Required*/
+      request.setDocCode("INV001");
+      request.setCompanyCode("APITrialCompany");
+      request.setDocType(DocumentType.SalesInvoice);
+      request.setDetailLevel(DetailLevel.Tax);
+/*Document Level Results*/
+      GetTaxHistoryResult result = soapSvc.getTaxHistory(request);
+      System.out.println("GetTaxHisotry Result: " + result.getResultCode().toString());
+      if (result.getResultCode() == SeverityLevel.Success) {
+        GetTaxRequest getTaxRequest = result.getGetTaxRequest();
+        GetTaxResult getTaxResults = result.getGetTaxResult();
+        ArrayOfBaseAddress addr_list = getTaxRequest.getAddresses();
+        BaseAddress origin = addr_list.getBaseAddress(getTaxRequest.getOriginCode());
+        BaseAddress dest = addr_list.getBaseAddress(getTaxRequest.getDestinationCode());
+        System.out.println("Document Status for Invoice "
+            + getTaxResults.getDocCode()
+            + ": " + getTaxResults.getDocStatus().toString());
         System.out.println();
         System.out.println("Origin Address:");
         System.out.println(origin.getLine1());
@@ -70,28 +67,27 @@ public class GetTaxHistoryTest {
         System.out.println("Total Invoice  Amount: " + getTaxResults.getTotalAmount().toString());
         System.out.println("Total SalesTax Amount: " + getTaxResults.getTotalTax().toString());
         System.out.println("Document Type: " + getTaxResults.getDocType().toString());
+/*Line Level Results*/
         System.out.println(" *** Line Info Follows: ***");
-        for (int l = 0; l < gtReq.getLines().getLine().length; l++) {
-          Line ln = gtReq.getLines().getLine(l);
-          System.out.println("Line: " + ln.getNo()
-              + " Item Code: " + ln.getItemCode()
-              + " Description: " + ln.getDescription()
-              + " Amount: " + ln.getAmount()
-              + " Qty: " + ln.getQty());
+        for (int l = 0; l < getTaxRequest.getLines().getLine().length; l++) {
+          Line line = getTaxRequest.getLines().getLine(l);
+          System.out.println("Line: " + line.getNo()
+              + " Item Code: " + line.getItemCode()
+              + " Description: " + line.getDescription()
+              + " Amount: " + line.getAmount()
+              + " Qty: " + line.getQty());
+
+          System.out.print("\n");
         }
       } else {
-        printMessages(getTaxHistoryResults.getMessages());
+        ArrayOfMessage messages = result.getMessages();
+        for (int ii = 0; ii < messages.size(); ii++) {
+          Message message = messages.getMessage(ii);
+          System.out.println(message.getSeverity().toString() + " " + ii + ": " + message.getSummary());
+        }
       }
-    } catch (ServiceException | SOAPException | IOException ex) {
-      System.out.println("Exception: " + ex.getMessage());
+    } catch (ServiceException ex) {
+      Logger.getLogger(GetTaxHistoryTest.class.getName()).log(Level.SEVERE, null, ex);
     }
-  }
-/* Message Handling*/
-  protected static void printMessages(ArrayOfMessage messages) {
-    for (int ii = 0; ii < messages.size(); ii++) {
-      Message message = messages.getMessage(ii);
-      System.out.println(message.getSeverity().toString() + " " + ii + ": " + message.getSummary());
-    }
-
   }
 }

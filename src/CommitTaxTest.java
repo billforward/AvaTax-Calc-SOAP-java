@@ -6,53 +6,46 @@ import javax.xml.rpc.ServiceException;
 import javax.xml.soap.SOAPException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.io.IOException;
+import java.rmi.RemoteException;
+import java.text.ParseException;
 
 public class CommitTaxTest {
 
-    protected static TaxSvcSoap getTaxSvc() throws ServiceException, SOAPException, MalformedURLException, IOException {
-    TaxSvc taxSvc;
-    TaxSvcSoap soapSvc;
-    taxSvc = new TaxSvcLocator();
-    soapSvc = taxSvc.getTaxSvcSoap(new URL("https://development.avalara.net"));
-    Security security = new Security();
-    security.setAccount("1234567890");
-    security.setLicense("A1B2C3D4E5F6G7H8");
-    Profile profile = new Profile();
-    profile.setClient("AvaTaxSample");
-    soapSvc.setProfile(profile);
-    soapSvc.setSecurity(security);
-    return soapSvc;
-  }
-
-  public static void main(String args[]) {
+  public static void main(String args[]) throws ParseException {
     try {
-      TaxSvcSoap taxSvc = getTaxSvc();
-      CommitTaxRequest commitTaxRequest = new CommitTaxRequest();
+      TaxSvcLocator taxSvc = new TaxSvcLocator();
+      String url = "https://development.avalara.net";
+      TaxSvcSoap soapSvc = taxSvc.getTaxSvcSoap(new URL(url));
+      Profile profile = new Profile();
+      profile.setClient("AvaTaxSample");
+      soapSvc.setProfile(profile);
+      Security security = new Security();
+      security.setAccount("1234567890");
+      security.setLicense("A1B2C3D4E5F6G7H8");
+      soapSvc.setSecurity(security);
+//
+      CommitTaxRequest request = new CommitTaxRequest();
 /*Required Request Parameters*/
-      commitTaxRequest.setDocCode("INV001");
-      commitTaxRequest.setDocType(DocumentType.SalesInvoice);
-      commitTaxRequest.setCompanyCode("");
+      request.setDocCode("INV001");
+      request.setDocType(DocumentType.SalesInvoice);
+      request.setCompanyCode("APITrialCompany");
 /*Optional*/
 //      commitTaxRequest.setNewDocCode("INV001-1");
 //
-      CommitTaxResult commitTaxResult = taxSvc.commitTax(commitTaxRequest);
-//
-      System.out.println("CommitTax Result: " + commitTaxResult.getResultCode().toString());
-      System.out.println("DocID: " + commitTaxResult.getDocId().toString());
-      if (commitTaxResult.getResultCode() != SeverityLevel.Success) {
-        printMessages(commitTaxResult.getMessages());
+      CommitTaxResult result = soapSvc.commitTax(request);
+      if (result.getResultCode() == SeverityLevel.Success) {
+        System.out.println("CommitTax Result: " + result.getResultCode().toString());
+        System.out.println("DocID: " + result.getDocId().toString());
+
+      } else {
+        ArrayOfMessage messages = result.getMessages();
+        for (int ii = 0; ii < messages.size(); ii++) {
+          Message message = messages.getMessage(ii);
+          System.out.println(message.getSeverity().toString() + " " + ii + ": " + message.getSummary());
+        }
       }
-    } catch (ServiceException | SOAPException | IOException ex) {
+    } catch (MalformedURLException | ServiceException | SOAPException | RemoteException ex) {
       System.out.println("Exception: " + ex.getMessage());
-    }
-  }
-/*Message Handling*/
-  protected static void printMessages(ArrayOfMessage messages) {
-    for (int ii = 0; ii < messages.size(); ii++) {
-      Message message = messages.getMessage(ii);
-      System.out.println(message.getSeverity().toString() + " " + ii + ": " + message.getSummary());
-    
     }
   }
 }
