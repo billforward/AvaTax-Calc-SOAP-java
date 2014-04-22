@@ -12,21 +12,21 @@ public class IsAuthorizedTest {
 
   public static void main(String args[]) {
     try {
-      TaxSvcLocator taxSvc = new TaxSvcLocator();
+      TaxSvcLocator  taxSvcLocator  = new TaxSvcLocator();
       String url = "https://development.avalara.net";
-      TaxSvcSoap soapSvc = taxSvc.getTaxSvcSoap(new URL(url));
+      TaxSvcSoap  taxSvc =  taxSvcLocator .getTaxSvcSoap(new URL(url));
       Profile profile = new Profile();
       profile.setClient("AvaTaxSample");
-      soapSvc.setProfile(profile);
+       taxSvc.setProfile(profile);
       Security security = new Security();
       security.setAccount("1234567890");
       security.setLicense("A1B2C3D4E5F6G7H8");
-      soapSvc.setSecurity(security);
-//
-      IsAuthorizedResult result = soapSvc.isAuthorized("Ping, IsAuthorized, GetTax, PostTax, CommitTax, CancelTax, ReconcileTaxHistory");
-      if (result.getResultCode() == SeverityLevel.Success) {
-        System.out.println("Operations:  " + result.getOperations().toString());
-        System.out.println("Transaction ID:  " + result.getTransactionId().toString());
+       taxSvc.setSecurity(security);
+
+      IsAuthorizedResult isAuthorizedResult = taxSvc.isAuthorized("Ping, IsAuthorized, GetTax, PostTax, CommitTax, CancelTax, ReconcileTaxHistory");
+      if (isAuthorizedResult.getResultCode() == SeverityLevel.Success) {
+        System.out.println("Authorized Operations:  " + isAuthorizedResult.getOperations().toString());
+        System.out.println("Transaction ID:  " + isAuthorizedResult.getTransactionId().toString());
 
       } else {
         ArrayOfMessage messages = new ArrayOfMessage();

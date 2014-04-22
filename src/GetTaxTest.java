@@ -16,47 +16,47 @@ public class GetTaxTest {
 
   public static void main(String args[]) {
     try {
-      TaxSvcLocator taxSvc = new TaxSvcLocator();
+      TaxSvcLocator  taxSvcLocator  = new TaxSvcLocator();
       String url = "https://development.avalara.net";
-      TaxSvcSoap soapSvc = taxSvc.getTaxSvcSoap(new URL(url));
+      TaxSvcSoap  taxSvc =  taxSvcLocator .getTaxSvcSoap(new URL(url));
       Profile profile = new Profile();
       profile.setClient("AvaTaxSample");
-      soapSvc.setProfile(profile);
+       taxSvc.setProfile(profile);
       Security security = new Security();
       security.setAccount("1234567890");
       security.setLicense("A1B2C3D4E5F6G7H8");
-      soapSvc.setSecurity(security);
+       taxSvc.setSecurity(security);
 //
-      GetTaxRequest request = new GetTaxRequest();
+      GetTaxRequest getTaxRequest = new GetTaxRequest();
       Format formatter = new SimpleDateFormat("yyyy-MM-dd");
 //
 /*Document Level Elements Required*/
-      request.setCompanyCode("APITrialCompany");
-      request.setDocType(DocumentType.SalesInvoice);
-      request.setDocCode("INV001");
+      getTaxRequest.setCompanyCode("APITrialCompany");
+      getTaxRequest.setDocType(DocumentType.SalesInvoice);
+      getTaxRequest.setDocCode("INV001");
       Date docDate = (Date) formatter.parseObject("2014-01-01");
-      request.setDocDate(docDate);
-      request.setCustomerCode("ABC4335");
-      request.setDetailLevel(DetailLevel.Tax);
-      request.setOriginCode("01");
-      request.setDestinationCode("02");
+      getTaxRequest.setDocDate(docDate);
+      getTaxRequest.setCustomerCode("ABC4335");
+      getTaxRequest.setDetailLevel(DetailLevel.Tax);
+      getTaxRequest.setOriginCode("01");
+      getTaxRequest.setDestinationCode("02");
 //
 /*Situational Request Document Parameters*/
-//    request.setSalespersonCode("Bill Sales");
-//    request.setCustomerUsageType("G");
-//    request.setDiscount(new BigDecimal(50.00));
-//    request.setPurchaseOrderNo("PO123456");
-//    request.setExemptionNo("12345");
-//    request.setReferenceCode("ref123456");
-//    request.setLocationCode("01");
-//    request.setCommit(true);
-//    request.setCurrencyCode("USD");
-//    request.setServiceMode(ServiceMode.Automatic);
-//    request.setExchangeRate(new BigDecimal(9.00));
+//    getTaxRequest.setSalespersonCode("Bill Sales");
+//    getTaxRequest.setCustomerUsageType("G");
+//    getTaxRequest.setDiscount(new BigDecimal(50.00));
+//    getTaxRequest.setPurchaseOrderNo("PO123456");
+//    getTaxRequest.setExemptionNo("12345");
+//    getTaxRequest.setReferenceCode("ref123456");
+//    getTaxRequest.setLocationCode("01");
+//    getTaxRequest.setCommit(true);
+//    getTaxRequest.setCurrencyCode("USD");
+//    getTaxRequest.setServiceMode(ServiceMode.Automatic);
+//    getTaxRequest.setExchangeRate(new BigDecimal(9.00));
 //    Date ExchangeRateEffDate = (Date) formatter.parseObject("2013-01-01");
-//    request.setExchangeRateEffDate(ExchangeRateEffDate);
-//    request.setPosLaneCode("09");
-//    request.setBusinessIdentificationNo("234243");
+//    getTaxRequest.setExchangeRateEffDate(ExchangeRateEffDate);
+//    getTaxRequest.setPosLaneCode("09");
+//    getTaxRequest.setBusinessIdentificationNo("234243");
 //
 /* TaxOverride at the Document Level
        Note: TaxOverride can exist at the 
@@ -69,7 +69,7 @@ public class GetTaxTest {
 //    taxOverride.setTaxAmount(new BigDecimal(0.00));
 //    Date taxOverrideDate = (Date) formatter.parseObject("2013-07-01");
 //    taxOverride.setTaxDate(taxOverrideDate);
-//    request.setTaxOverride(taxOverride);
+//    getTaxRequest.setTaxOverride(taxOverride);
 /*END TaxOverride at the Document Level*/
 //
 /*Address Data*/
@@ -103,7 +103,7 @@ public class GetTaxTest {
       address3.setLongitude("-122.51702");
       addresses.add(address3);
 //Add addresses to addresses array
-      request.setAddresses(addresses);
+      getTaxRequest.setAddresses(addresses);
 //
 /*Add invoice lines*/
 //
@@ -138,7 +138,7 @@ public class GetTaxTest {
 //    taxOverride.setTaxAmount(new BigDecimal(0.00));
 //    Date taxOverrideDate = (Date) formatter.parseObject("2013-07-01");
 //    taxOverride.setTaxDate(taxOverrideDate);
-//    request.setTaxOverride(taxOverride);
+//    getTaxRequest.setTaxOverride(taxOverride);
 /*END TaxOverride at the Document Level*/
 //
       lines.add(line);
@@ -165,20 +165,20 @@ public class GetTaxTest {
       line.setTaxCode("FR");
       lines.add(line);
 //
-      request.setLines(lines);
+      getTaxRequest.setLines(lines);
 //
 /*Document Level Results*/
-      GetTaxResult result = soapSvc.getTax(request);
-      System.out.println("GetTax Result: " + result.getResultCode().toString());
-      if (result.getResultCode() == SeverityLevel.Success) {
-        System.out.println("DocCode: " + request.getDocCode());
-        System.out.println("Total Amount: " + result.getTotalAmount().toString());
-        System.out.println("Total Tax Calculated Amount: " + result.getTotalTaxCalculated().toString());
-        System.out.println("TotalTax: " + result.getTotalTax().toString());
-        for (int i = 0; i < result.getTaxLines().getTaxLine().length; i++) {
+      GetTaxResult getTaxResult =  taxSvc.getTax(getTaxRequest);
+      System.out.println("GetTax Result: " + getTaxResult.getResultCode().toString());
+      if (getTaxResult.getResultCode() == SeverityLevel.Success) {
+        System.out.println("DocCode: " + getTaxRequest.getDocCode());
+        System.out.println("Total Amount: " + getTaxResult.getTotalAmount().toString());
+        System.out.println("Total Tax Calculated Amount: " + getTaxResult.getTotalTaxCalculated().toString());
+        System.out.println("TotalTax: " + getTaxResult.getTotalTax().toString());
+        for (int i = 0; i < getTaxResult.getTaxLines().getTaxLine().length; i++) {
 //
 /*Line Level Results*/
-          TaxLine currentTaxLine = result.getTaxLines().getTaxLine(i);
+          TaxLine currentTaxLine = getTaxResult.getTaxLines().getTaxLine(i);
           System.out.println("         Line: " + currentTaxLine.getNo()
               + " Tax: " + currentTaxLine.getTax()
               + " TaxCode: " + currentTaxLine.getTaxCode());
@@ -199,7 +199,7 @@ public class GetTaxTest {
           System.out.print("\n");
         }
       } else {
-        ArrayOfMessage messages = result.getMessages();
+        ArrayOfMessage messages = getTaxResult.getMessages();
         for (int ii = 0; ii < messages.size(); ii++) {
           Message message = messages.getMessage(ii);
           System.out.println(message.getSeverity().toString() + " " + ii + ": " + message.getSummary());

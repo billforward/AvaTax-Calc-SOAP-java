@@ -13,16 +13,16 @@ public class CommitTaxTest {
 
   public static void main(String args[]) throws ParseException {
     try {
-      TaxSvcLocator taxSvc = new TaxSvcLocator();
+      TaxSvcLocator  taxSvcLocator  = new TaxSvcLocator();
       String url = "https://development.avalara.net";
-      TaxSvcSoap soapSvc = taxSvc.getTaxSvcSoap(new URL(url));
+      TaxSvcSoap  taxSvc =  taxSvcLocator .getTaxSvcSoap(new URL(url));
       Profile profile = new Profile();
       profile.setClient("AvaTaxSample");
-      soapSvc.setProfile(profile);
+       taxSvc.setProfile(profile);
       Security security = new Security();
       security.setAccount("1234567890");
       security.setLicense("A1B2C3D4E5F6G7H8");
-      soapSvc.setSecurity(security);
+       taxSvc.setSecurity(security);
 //
       CommitTaxRequest request = new CommitTaxRequest();
 /*Required Request Parameters*/
@@ -32,13 +32,13 @@ public class CommitTaxTest {
 /*Optional*/
 //      commitTaxRequest.setNewDocCode("INV001-1");
 //
-      CommitTaxResult result = soapSvc.commitTax(request);
-      if (result.getResultCode() == SeverityLevel.Success) {
-        System.out.println("CommitTax Result: " + result.getResultCode().toString());
-        System.out.println("DocID: " + result.getDocId().toString());
+      CommitTaxResult commitTaxResult =  taxSvc.commitTax(request);
+      if (commitTaxResult.getResultCode() == SeverityLevel.Success) {
+        System.out.println("CommitTax commitTaxResult: " + commitTaxResult.getResultCode().toString());
+        System.out.println("DocID: " + commitTaxResult.getDocId().toString());
 
       } else {
-        ArrayOfMessage messages = result.getMessages();
+        ArrayOfMessage messages = commitTaxResult.getMessages();
         for (int ii = 0; ii < messages.size(); ii++) {
           Message message = messages.getMessage(ii);
           System.out.println(message.getSeverity().toString() + " " + ii + ": " + message.getSummary());

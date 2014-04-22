@@ -14,29 +14,29 @@ public class GetTaxHistoryTest {
 
   public static void main(String args[]) throws MalformedURLException, SOAPException, RemoteException {
     try {
-      TaxSvcLocator taxSvc = new TaxSvcLocator();
+      TaxSvcLocator taxSvcLocator = new TaxSvcLocator();
       String url = "https://development.avalara.net";
-      TaxSvcSoap soapSvc = taxSvc.getTaxSvcSoap(new URL(url));
+      TaxSvcSoap taxSvc = taxSvcLocator.getTaxSvcSoap(new URL(url));
       Profile profile = new Profile();
       profile.setClient("AvaTaxSample");
-      soapSvc.setProfile(profile);
+      taxSvc.setProfile(profile);
       Security security = new Security();
       security.setAccount("1234567890");
       security.setLicense("A1B2C3D4E5F6G7H8");
-      soapSvc.setSecurity(security);
+      taxSvc.setSecurity(security);
 //     
-      GetTaxHistoryRequest request = new GetTaxHistoryRequest();
+      GetTaxHistoryRequest getTaxHistoryRequest = new GetTaxHistoryRequest();
 /*Document Level Elements Required*/
-      request.setDocCode("INV001");
-      request.setCompanyCode("APITrialCompany");
-      request.setDocType(DocumentType.SalesInvoice);
-      request.setDetailLevel(DetailLevel.Tax);
+      getTaxHistoryRequest.setDocCode("INV001");
+      getTaxHistoryRequest.setCompanyCode("APITrialCompany");
+      getTaxHistoryRequest.setDocType(DocumentType.SalesInvoice);
+      getTaxHistoryRequest.setDetailLevel(DetailLevel.Tax);
 /*Document Level Results*/
-      GetTaxHistoryResult result = soapSvc.getTaxHistory(request);
-      System.out.println("GetTaxHisotry Result: " + result.getResultCode().toString());
-      if (result.getResultCode() == SeverityLevel.Success) {
-        GetTaxRequest getTaxRequest = result.getGetTaxRequest();
-        GetTaxResult getTaxResults = result.getGetTaxResult();
+      GetTaxHistoryResult getTaxHistoryResult = taxSvc.getTaxHistory(getTaxHistoryRequest);
+      System.out.println("GetTaxHisotry Result: " + getTaxHistoryResult.getResultCode().toString());
+      if (getTaxHistoryResult.getResultCode() == SeverityLevel.Success) {
+        GetTaxRequest getTaxRequest = getTaxHistoryResult.getGetTaxRequest();
+        GetTaxResult getTaxResults = getTaxHistoryResult.getGetTaxResult();
         ArrayOfBaseAddress addr_list = getTaxRequest.getAddresses();
         BaseAddress origin = addr_list.getBaseAddress(getTaxRequest.getOriginCode());
         BaseAddress dest = addr_list.getBaseAddress(getTaxRequest.getDestinationCode());
@@ -80,7 +80,7 @@ public class GetTaxHistoryTest {
           System.out.print("\n");
         }
       } else {
-        ArrayOfMessage messages = result.getMessages();
+        ArrayOfMessage messages = getTaxHistoryResult.getMessages();
         for (int ii = 0; ii < messages.size(); ii++) {
           Message message = messages.getMessage(ii);
           System.out.println(message.getSeverity().toString() + " " + ii + ": " + message.getSummary());
