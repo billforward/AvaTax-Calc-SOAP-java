@@ -26,12 +26,12 @@ public class GetTaxHistoryTest {
       taxSvc.setSecurity(security);
 //     
       GetTaxHistoryRequest getTaxHistoryRequest = new GetTaxHistoryRequest();
-/*Document Level Elements Required*/
+      /*Document Level Elements Required*/
       getTaxHistoryRequest.setDocCode("INV001");
       getTaxHistoryRequest.setCompanyCode("APITrialCompany");
       getTaxHistoryRequest.setDocType(DocumentType.SalesInvoice);
       getTaxHistoryRequest.setDetailLevel(DetailLevel.Tax);
-/*Document Level Results*/
+      /*Document Level Results*/
       GetTaxHistoryResult getTaxHistoryResult = taxSvc.getTaxHistory(getTaxHistoryRequest);
       System.out.println("GetTaxHisotry Result: " + getTaxHistoryResult.getResultCode().toString());
       if (getTaxHistoryResult.getResultCode() == SeverityLevel.Success) {
@@ -67,7 +67,7 @@ public class GetTaxHistoryTest {
         System.out.println("Total Invoice  Amount: " + getTaxResults.getTotalAmount().toString());
         System.out.println("Total SalesTax Amount: " + getTaxResults.getTotalTax().toString());
         System.out.println("Document Type: " + getTaxResults.getDocType().toString());
-/*Line Level Results*/
+        /*Line Level Results*/
         System.out.println(" *** Line Info Follows: ***");
         for (int l = 0; l < getTaxRequest.getLines().getLine().length; l++) {
           Line line = getTaxRequest.getLines().getLine(l);

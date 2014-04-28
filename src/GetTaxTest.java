@@ -16,16 +16,16 @@ public class GetTaxTest {
 
   public static void main(String args[]) {
     try {
-      TaxSvcLocator  taxSvcLocator  = new TaxSvcLocator();
+      TaxSvcLocator taxSvcLocator = new TaxSvcLocator();
       String url = "https://development.avalara.net";
-      TaxSvcSoap  taxSvc =  taxSvcLocator .getTaxSvcSoap(new URL(url));
+      TaxSvcSoap taxSvc = taxSvcLocator.getTaxSvcSoap(new URL(url));
       Profile profile = new Profile();
       profile.setClient("AvaTaxSample");
-       taxSvc.setProfile(profile);
+      taxSvc.setProfile(profile);
       Security security = new Security();
       security.setAccount("1234567890");
       security.setLicense("A1B2C3D4E5F6G7H8");
-       taxSvc.setSecurity(security);
+      taxSvc.setSecurity(security);
 //
       GetTaxRequest getTaxRequest = new GetTaxRequest();
       Format formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -74,7 +74,7 @@ public class GetTaxTest {
 //
 /*Address Data*/
       ArrayOfBaseAddress addresses = new ArrayOfBaseAddress(3);
-/*Address 01*/
+      /*Address 01*/
       BaseAddress address1 = new BaseAddress();
       address1.setAddressCode("01");
       address1.setLine1("45 Fremont Street");
@@ -85,7 +85,7 @@ public class GetTaxTest {
       address1.setPostalCode("94105");
       address1.setCountry("US");
       addresses.add(address1);
-/*Address 02*/
+      /*Address 02*/
       BaseAddress address2 = new BaseAddress();
       address2.setAddressCode("02");
       address2.setLine3("ATTN Accounts Payable");
@@ -96,7 +96,7 @@ public class GetTaxTest {
       address2.setPostalCode("60602");
       address2.setCountry("US");
       addresses.add(address2);
-/*Address 03*/
+      /*Address 03*/
       BaseAddress address3 = new BaseAddress();
       address3.setAddressCode("03");
       address3.setLatitude("47.627935");
@@ -109,7 +109,7 @@ public class GetTaxTest {
 //
       ArrayOfLine lines = new ArrayOfLine(3);
       Line line;
-/*Line 01*/
+      /*Line 01*/
       line = new Line();
       line.setNo("01");
       line.setItemCode("N543");
@@ -142,7 +142,7 @@ public class GetTaxTest {
 /*END TaxOverride at the Document Level*/
 //
       lines.add(line);
-/*Line 02*/
+      /*Line 02*/
       line = new Line();
       line.setNo("02");
       line.setOriginCode("01");
@@ -153,7 +153,7 @@ public class GetTaxTest {
       line.setAmount(new BigDecimal(150.00));
       line.setTaxCode("PC030147");
       lines.add(line);
-/*Line 03*/
+      /*Line 03*/
       line = new Line();
       line.setOriginCode("01");
       line.setDestinationCode("03");
@@ -168,7 +168,7 @@ public class GetTaxTest {
       getTaxRequest.setLines(lines);
 //
 /*Document Level Results*/
-      GetTaxResult getTaxResult =  taxSvc.getTax(getTaxRequest);
+      GetTaxResult getTaxResult = taxSvc.getTax(getTaxRequest);
       System.out.println("GetTax Result: " + getTaxResult.getResultCode().toString());
       if (getTaxResult.getResultCode() == SeverityLevel.Success) {
         System.out.println("DocCode: " + getTaxRequest.getDocCode());

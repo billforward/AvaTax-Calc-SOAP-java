@@ -1,3 +1,4 @@
+
 import com.avalara.avatax.services.tax.*;
 import com.avalara.avatax.services.base.Profile;
 import com.avalara.avatax.services.base.Security;
@@ -12,30 +13,30 @@ public class CancelTaxTest {
 
   public static void main(String args[]) throws ParseException {
     try {
-      TaxSvcLocator  taxSvcLocator  = new TaxSvcLocator();
+      TaxSvcLocator taxSvcLocator = new TaxSvcLocator();
       String url = "https://development.avalara.net";
-      TaxSvcSoap  taxSvc =  taxSvcLocator .getTaxSvcSoap(new URL(url));
+      TaxSvcSoap taxSvc = taxSvcLocator.getTaxSvcSoap(new URL(url));
       Profile profile = new Profile();
       profile.setClient("AvaTaxSample");
-       taxSvc.setProfile(profile);
+      taxSvc.setProfile(profile);
       Security security = new Security();
       security.setAccount("1234567890");
       security.setLicense("A1B2C3D4E5F6G7H8");
-       taxSvc.setSecurity(security);
+      taxSvc.setSecurity(security);
 
       CancelTaxRequest cancelTaxRequest = new CancelTaxRequest();
-/*Required Request Parameters*/
+      /*Required Request Parameters*/
       cancelTaxRequest.setDocCode("INV001");
       cancelTaxRequest.setCompanyCode("APITrialCompany");
       cancelTaxRequest.setDocType(DocumentType.SalesInvoice);
       cancelTaxRequest.setCancelCode(CancelCode.DocVoided);
-/*Optional Request Parameters*/     
+      /*Optional Request Parameters*/
 //      cancelTaxRequest.setDocId("INV001-1");     
 //
-      CancelTaxResult cancelTaxResult =  taxSvc.cancelTax(cancelTaxRequest);
+      CancelTaxResult cancelTaxResult = taxSvc.cancelTax(cancelTaxRequest);
       if (cancelTaxResult.getResultCode() == SeverityLevel.Success) {
         System.out.println("CancelTax cancelTaxResult: " + cancelTaxResult.getResultCode().toString());
-        System.out.println ("Document ID:  " + cancelTaxResult.getDocId() . toString());
+        System.out.println("Document ID:  " + cancelTaxResult.getDocId().toString());
 
       } else {
         ArrayOfMessage messages = cancelTaxResult.getMessages();
