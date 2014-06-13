@@ -33,7 +33,9 @@ public class DocumentType implements java.io.Serializable {
     private static final java.lang.String _Any = "Any";
     private static final java.lang.String _InventoryTransferInvoice = "InventoryTransferInvoice";
     private static final java.lang.String _InventoryTransferOrder = "InventoryTransferOrder";
-
+	private static final java.lang.String _ReverseChargeOrder = "ReverseChargeOrder";
+    private static final java.lang.String _ReverseChargeInvoice = "ReverseChargeInvoice";
+    
     /**
      *  Sales Order, estimate or quote. This is a temporary document type and is not saved in tax history.
      * {@link GetTaxResult} will return with a {@link DocStatus} of <b>Temporary</b>.
@@ -85,6 +87,18 @@ public class DocumentType implements java.io.Serializable {
      * {@link GetTaxResult} will return with a {@link DocStatus} of <b>Temporary</b>.
      */
     public static final DocumentType InventoryTransferOrder = new DocumentType(_InventoryTransferOrder);
+	
+	/**
+     * ReverseChargeInvoice order, estimate, or quote. This is a temporary document type and is not saved in tax history.
+     * {@link GetTaxResult} will return with a {@link DocStatus} of <b>Temporary</b>.
+     */
+	public static final DocumentType ReverseChargeInvoice = new DocumentType(_ReverseChargeInvoice);
+
+	/**
+     * ReverseChargeOrder order, estimate, or quote. This is a temporary document type and is not saved in tax history.
+     * {@link GetTaxResult} will return with a {@link DocStatus} of <b>Temporary</b>.
+     */    
+    public static final DocumentType ReverseChargeOrder = new DocumentType(_ReverseChargeOrder);
 
     public java.lang.String getValue() { return _value_;}
     public static DocumentType fromValue(java.lang.String value)
