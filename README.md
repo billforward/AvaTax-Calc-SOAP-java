@@ -1,9 +1,9 @@
 <body bgcolor="#FFFFFF">
 <p>The <strong>AvaTaxCalc JAVA (for SOAP) Sample</strong> is open source designed to assist you with developing your own <em>custom</em> integration to your chosen web store or e-commerce solution. The adapter was built using Apache Axis WSDL2Java to build the stubs which were then enhanced to support a custom Profile SOAP header element and a WS-Security UsernameToken SOAP header element.  It uses WSS4J to build the security token.</p>
-<p>Each sample included can be executed independently from a command prompt provided they have been pre-configured with the Web service <strong>URL</strong> and your <strong>Account</strong> Number and <strong>License</strong> Key.</p>
+<p>To run selected samples in the src folder, you will need to modify the avatax4j.properties file, included in the root directory of this sample, with your own account and license key.</p>
+  <em><strong>Note: </strong></em>The Avalara Admin Account <em>Username</em> and <em>Password</em> can be used in place of <em>avatax4j.account</em> and <em>avatax4j.license</em> properties.
+ <p>See http://developer.avalara.com/api-docs/designing-your-integration for more information.
 
-<em><strong>Note: </strong></em>The Avalara Admin Account <strong><em>Username</em></strong> and <strong><em>Password</em></strong> can be used in place of <strong><em>Account</em></strong> and <em><strong>License</strong> Key</em>
-<p>See <a href="http://developer.avalara.com/api-docs/designing-your-integration/gettax">http://developer.avalara.com/api-docs/designing-your-integration/gettax</a> for more information. </p>
 <h4><strong>Installation Dependencies</strong></h4>
 <ul>
   <li>All dependent jar files are included in the /lib folder for building and running the included samples.</li>
@@ -28,6 +28,10 @@
   <tr>
     <td width="172"><div align="center"><strong>API</strong></div></td>
     <td width="828"><div align="center"><strong>Method Demonstrated</strong></div></td>
+  </tr>
+  <tr>
+    <td><strong>avatax4j.properties</strong></td>
+    <td> Properties file located in the root directory of the API sample used to configure URL, Account, License Key and the client Profile. The Properties file is located outside the API directory for security reasons.</td>
   </tr>
   <tr>
     <td><strong>IsAuthorizedTest.java</strong></td>
@@ -75,7 +79,7 @@
   </tr>
   <tr>
     <td><strong>/doc</td>
-    <td>Contains documentation for the sorce code located in <strong>/src </strong>-- Navigate to ..<a href="\doc\api\index.html">\doc\api\index.html</a> to veiw documentation.</td>
+    <td>Contains documentation for the source code located in <strong>/src </strong>-- Navigate to ..<a href="\doc\api\index.html">\doc\api\index.html</a> to veiw documentation.</td>
   </tr>
   <tr>
     <td><strong>/src</strong></td>

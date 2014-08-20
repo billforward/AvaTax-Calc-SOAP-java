@@ -2,27 +2,42 @@
 import com.avalara.avatax.services.tax.*;
 import com.avalara.avatax.services.base.Profile;
 import com.avalara.avatax.services.base.Security;
+import java.util.Properties;
 import javax.xml.rpc.ServiceException;
 import javax.xml.soap.SOAPException;
 import java.net.URL;
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 public class IsAuthorizedTest {
 
-  public static void main(String args[]) {
+  public static void main(String args[]) throws IOException {
+    Properties properties = new Properties();
+    File file = new File("avatax4j.properties");
+    try {
+      properties.load(new FileInputStream(file));
+    } catch (IOException e) {
+      System.out.println("Unable to locate avatax4j.properties");
+      throw e;
+    }
     try {
       TaxSvcLocator taxSvcLocator = new TaxSvcLocator();
-      String url = "https://development.avalara.net";
+      String url = properties.getProperty("avatax4j.url");
       TaxSvcSoap taxSvc = taxSvcLocator.getTaxSvcSoap(new URL(url));
       Profile profile = new Profile();
-      profile.setClient("AvaTaxSample");
+      String proFile = properties.getProperty("avatax4j.account");
+      profile.setClient(proFile);
       taxSvc.setProfile(profile);
       Security security = new Security();
-      security.setAccount("1234567890");
-      security.setLicense("A1B2C3D4E5F6G7H8");
+      String account = properties.getProperty("avatax4j.account");
+      security.setAccount(account);
+      String license = properties.getProperty("avatax4j.license");
+      security.setLicense(license);
       taxSvc.setSecurity(security);
-
+/*Request*/
       IsAuthorizedResult isAuthorizedResult = taxSvc.isAuthorized("Ping, IsAuthorized, GetTax, PostTax, CommitTax, CancelTax, ReconcileTaxHistory");
       if (isAuthorizedResult.getResultCode() == SeverityLevel.Success) {
         System.out.println("Authorized Operations:  " + isAuthorizedResult.getOperations().toString());

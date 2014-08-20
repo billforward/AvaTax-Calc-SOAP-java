@@ -1,28 +1,44 @@
 
+import com.avalara.avatax.services.address.*;
 import com.avalara.avatax.services.base.Profile;
 import com.avalara.avatax.services.base.Security;
-import com.avalara.avatax.services.address.*;
+import java.util.Properties;
 import javax.xml.rpc.ServiceException;
 import javax.xml.soap.SOAPException;
 import java.net.URL;
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 public class ValidateTest {
 
-  public static void main(String args[]) {
-
+  public static void main(String args[]) throws IOException {
+    Properties properties = new Properties();
+    File file = new File("avatax4j.properties");
     try {
+      properties.load(new FileInputStream(file));
+    } catch (IOException e) {
+      System.out.println("Unable to locate avatax4j.properties");
+      throw e;
+    }
+    try {
+//      TaxSvcLocator taxSvcLocator = new TaxSvcLocator();
       AddressSvcLocator AddressSvc = new AddressSvcLocator();
-      String url = "https://development.avalara.net";
-      AddressSvcSoap taxSvc = AddressSvc.getAddressSvcSoap(new URL(url));
+      String url = properties.getProperty("avatax4j.url");
+      AddressSvcSoap addressSvc = AddressSvc.getAddressSvcSoap(new URL(url));
       Profile profile = new Profile();
-      profile.setClient("AvaTaxSample");
-      taxSvc.setProfile(profile);
+      String proFile = properties.getProperty("avatax4j.account");
+      profile.setClient(proFile);
+      addressSvc.setProfile(profile);
       Security security = new Security();
-      security.setAccount("1234567890");
-      security.setLicense("A1B2C3D4E5F6G7H8");
-      taxSvc.setSecurity(security);
+      String account = properties.getProperty("avatax4j.account");
+      security.setAccount(account);
+      String license = properties.getProperty("avatax4j.license");
+      security.setLicense(license);
+      addressSvc.setSecurity(security);
+      /*Request*/
 
       ValidateRequest validateRequest = new ValidateRequest();
       Address address = new Address();
@@ -36,7 +52,7 @@ public class ValidateTest {
       validateRequest.setTextCase(TextCase.Default);
       validateRequest.setCoordinates(true);
 //
-      ValidateResult validateResult = taxSvc.validate(validateRequest);
+      ValidateResult validateResult = addressSvc.validate(validateRequest);
       if (validateResult.getResultCode() == SeverityLevel.Success) {
         System.out.println("Validate Result: " + validateResult.getResultCode().toString());
         ValidAddress validAddress = validateResult.getValidAddresses().getValidAddress(0);
