@@ -1,6 +1,6 @@
 <body bgcolor="#FFFFFF">
 <p>The <strong>AvaTaxCalc JAVA (for SOAP) Sample</strong> is open source designed to assist you with developing your own <em>custom</em> integration to your chosen web store or e-commerce solution. The adapter was built using Apache Axis WSDL2Java to build the stubs which were then enhanced to support a custom Profile SOAP header element and a WS-Security UsernameToken SOAP header element.  It uses WSS4J to build the security token.</p>
-<p>To run selected samples in the src folder, you will need to modify the avatax4j.properties file, included in the root directory of this sample, with your own account and license key.</p>
+<p>To run selected samples in the src folder, you will need to modify the avatax4j.properties file with your own account and license key.</p>
   <em><strong>Note: </strong></em>The Avalara Admin Account <em>Username</em> and <em>Password</em> can be used in place of <em>avatax4j.account</em> and <em>avatax4j.license</em> properties.
  <p>See http://developer.avalara.com/api-docs/designing-your-integration for more information.
 
@@ -31,7 +31,7 @@
   </tr>
   <tr>
     <td><strong>avatax4j.properties</strong></td>
-    <td> Properties file located in the root directory of the API sample used to configure URL, Account, License Key and the client Profile. The Properties file is located outside the API directory for security reasons.</td>
+    <td> Properties file used to configure URL, Account, License Key and the client Profile. It is a best practice recommendation that you save this file outside of the API directory in a read only (-rw-r--r--or 0644 for UNIX / Linux based systems) directory for security reasons.</td>
   </tr>
   <tr>
     <td><strong>IsAuthorizedTest.java</strong></td>
