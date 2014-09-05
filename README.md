@@ -1,3 +1,5 @@
+[Other Samples](http://developer.avalara.com/api-docs/api-sample-code)
+
 <body bgcolor="#FFFFFF">
 <p>The <strong>AvaTaxCalc JAVA (for SOAP) Sample</strong> is open source designed to assist you with developing your own <em>custom</em> integration to your chosen web store or e-commerce solution. The adapter was built using Apache Axis WSDL2Java to build the stubs which were then enhanced to support a custom Profile SOAP header element and a WS-Security UsernameToken SOAP header element.  It uses WSS4J to build the security token.</p>
 <p>To run selected samples in the src folder, you will need to modify the avatax4j.properties file with your own account and license key.</p>
