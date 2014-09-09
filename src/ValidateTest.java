@@ -29,8 +29,8 @@ public class ValidateTest {
       String url = properties.getProperty("avatax4j.url");
       AddressSvcSoap addressSvc = AddressSvc.getAddressSvcSoap(new URL(url));
       Profile profile = new Profile();
-      String proFile = properties.getProperty("avatax4j.account");
-      profile.setClient(proFile);
+      String client = properties.getProperty("avatax4j.client");
+      profile.setClient(client);
       addressSvc.setProfile(profile);
       Security security = new Security();
       String account = properties.getProperty("avatax4j.account");
