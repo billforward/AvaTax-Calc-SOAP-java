@@ -28,7 +28,7 @@ public class PingTest {
       String url = properties.getProperty("avatax4j.url");
       TaxSvcSoap taxSvc = taxSvcLocator.getTaxSvcSoap(new URL(url));
       Profile profile = new Profile();
-      String proFile = properties.getProperty("avatax4j.account");
+      String proFile = properties.getProperty("avatax4j.profile");
       profile.setClient(proFile);
       taxSvc.setProfile(profile);
       Security security = new Security();
